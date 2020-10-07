@@ -1,0 +1,48 @@
+body {
+    background-image: url("https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&w=1000&q=80");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+
+/* perfect centering */
+    justify-content: center;
+    align-items: center;
+    
+    align-content: space-between;
+}
+
+.border-black{
+    border:1px solid black;
+}
+
+.card:hover{
+    box-shadow: 10px 10px 5px grey;
+}
+/* Kanban Card */
+.red{
+    background-color: firebrick;
+}
+.orange{
+    background-color: olivedrab;
+}
+.blue{
+    background-color: blue;
+}
+.green{
+    background-color: olivedrab;
+}
+
+/* Kanban Title */
+.white{
+    color: floralwhite;
+}
+/* Jumbotron home */
+.jumbotron{
+    position: relative;
+}
