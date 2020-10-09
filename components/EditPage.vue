@@ -40,7 +40,7 @@ export default {
         edit(id){
             axios ({
               url: `http://localhost:3000/tasks/${id}`,
-              method: 'put',
+              method: 'patch',
               data: {
                 category: this.statusEdit.toLowerCase()
               },

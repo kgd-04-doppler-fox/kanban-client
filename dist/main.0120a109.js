@@ -10726,7 +10726,7 @@ var _default = {
 
       (0, _axios.default)({
         url: "http://localhost:3000/tasks/".concat(id),
-        method: 'put',
+        method: 'patch',
         data: {
           category: this.statusEdit.toLowerCase()
         },
@@ -12156,6 +12156,7 @@ exports.default = _default;
       _vm._v(" "),
       _vm.currentPage === "login"
         ? _c("Login", {
+            attrs: { id: "loginPage" },
             on: {
               changePage: function($event) {
                 return _vm.changePage("home")

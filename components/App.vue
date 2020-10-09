@@ -1,7 +1,7 @@
 <template>
   <div>
       <Navbar :page="currentPage" @logout="changePage('login')" @signin="changePage('login')"></Navbar>
-      <Login v-if="currentPage === 'login'" @changePage="changePage('home')" @registrationPage="changePage('register')" @fetchRead="fetchTask()"></Login>
+      <Login id="loginPage" v-if="currentPage === 'login'" @changePage="changePage('home')" @registrationPage="changePage('register')" @fetchRead="fetchTask()"></Login>
       <Register v-if="currentPage === 'register'"></Register>
 
       <h1 v-if="currentPage === 'home'" id="home_title">Task Lists</h1>
@@ -96,6 +96,7 @@ export default {
       text-align: center;
       margin-top: 30px;
       font-family: 'Poppins', sans-serif;
+      color: white;
     }
 
     
