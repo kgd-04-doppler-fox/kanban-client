@@ -3,30 +3,44 @@
       <Navbar :page="currentPage" @logout="changePage('login')" @signin="changePage('login')"></Navbar>
       <Login v-if="currentPage === 'login'" @changePage="changePage('home')" @registrationPage="changePage('register')" @fetchRead="fetchTask()"></Login>
       <Register v-if="currentPage === 'register'"></Register>
+
       <h1 v-if="currentPage === 'home'" id="home_title">Task Lists</h1>
-      <Board v-if="currentPage === 'home'" :tasks="tasks" id="board"></Board>
+      <button class="btn btn-primary" v-if="currentPage === 'home'" @click="changePage('create')" >Add Task</button>
+
+      <Board v-if="currentPage === 'home'" :tasks="tasks" id="board" @editTask="editData" ></Board>
+      <AddTask id="create-page" v-if="currentPage === 'create'"  @addDone="changePage('home')" @fetchNewData="fetchTask" ></AddTask>
+      <EditPage v-if="currentPage === 'edit'" :editData="editTask"></EditPage>
+
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import EditPage from './EditPage'
 import Navbar from './Navbar'
 import Login from './Login'
 import Register from './Register'
 import Board from './Board'
+import AddTask from './AddTask'
+import TaskCard from './TaskCard'
 
 export default {
+    name: 'Gate',
     data (){
         return {
             currentPage: 'login',
             tasks: [],
+            editTask: {}
         }
     },
     components : {
         Navbar,
         Login,
         Register,
-        Board
+        Board,
+        EditPage,
+        TaskCard,
+        AddTask
     },
     methods : {
         changePage(page){
@@ -47,7 +61,12 @@ export default {
             .catch(err => {
                 console.log(err)
             })
-        }
+        },
+        
+        editData(data){
+            this.editTask = data
+            this.currentPage = 'edit'
+        },
     },
     created(){
         if(localStorage.getItem('access_token')){
@@ -69,11 +88,15 @@ export default {
     margin-top: 20px;
     
 
-  }
+    };
 
-  #home_title{
+    #home_title{
       text-align: center;
       margin-top: 30px;
       font-family: 'Poppins', sans-serif;
-  }
+    };
+
+    #create-page{
+        width: 300px
+    };
 </style>

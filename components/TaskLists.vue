@@ -8,6 +8,7 @@
         :key="task.id"
         :tugas="task"
         id="taskBox"
+        @editPage="editTask"
       ></TaskCard>
   </div>
 </template>
@@ -25,7 +26,11 @@ export default {
     methods : {
         taskFilter(){
             return this.assignments.filter(task=> task.category === this.category)
+        },
+        editTask(data){
+            this.$emit('emitEdit', data)
         }
+
     }
 }
 </script>

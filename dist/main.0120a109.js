@@ -10674,7 +10674,153 @@ function patchScopedSlots (instance) {
   }
 }
 
-},{}],"components/Navbar.vue":[function(require,module,exports) {
+},{}],"components/EditPage.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: "EditPage",
+  props: ['editData'],
+  data: function data() {
+    return {
+      buttonR: '',
+      buttonL: ''
+    };
+  },
+  methods: {
+    edit: function edit() {
+      var _this = this;
+
+      this.currentPage = 'edit';
+      var id = localStorage.getItem('taskId');
+      (0, _axios.default)({
+        url: "http://localhost:3000/tasks/".concat(id),
+        method: 'get',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      }).then(function (response) {
+        console.log(response.task);
+        _this.editTask = response;
+        currentStatus = response.status;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  },
+  created: function created() {
+    if (this.editData.category === 'backlog') {
+      this.buttonR = 'To-Do';
+    } else if (this.editData.category === 'to-do') {
+      this.buttonR = 'Doing';
+      this.buttonL = 'Backlog';
+    } else if (this.editData.category === 'doing') {
+      this.buttonR = 'Done';
+      this.buttonL = 'To-Do';
+    } else if (this.editData.category === 'done') {
+      this.buttonL = 'Doing';
+    }
+  }
+};
+exports.default = _default;
+        var $6a3e0f = exports.default || module.exports;
+      
+      if (typeof $6a3e0f === 'function') {
+        $6a3e0f = $6a3e0f.options;
+      }
+    
+        /* template */
+        Object.assign($6a3e0f, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "shadow-lg p-3 mb-5 bg-white rounded",
+      staticStyle: { width: "500px", margin: "auto", "margin-top": "60px" },
+      attrs: { id: "start-page" }
+    },
+    [
+      _c("p", [_vm._v("Task Description")]),
+      _vm._v(" "),
+      _c("p", [_vm._v(_vm._s(_vm.editData.title))]),
+      _vm._v(" "),
+      _c("div", [
+        _vm.editData.category !== "backlog"
+          ? _c("button", { staticClass: "btn btn-outline-warning btn-sm" }, [
+              _vm._v(_vm._s(_vm.buttonL))
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-outline-danger btn-sm" }, [
+          _vm._v("Delete")
+        ]),
+        _vm._v(" "),
+        _vm.editData.category !== "done"
+          ? _c("button", { staticClass: "btn btn-outline-success btn-sm" }, [
+              _vm._v(_vm._s(_vm.buttonR))
+            ])
+          : _vm._e()
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$6a3e0f', $6a3e0f);
+          } else {
+            api.reload('$6a3e0f', $6a3e0f);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"axios":"node_modules/axios/index.js","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/Navbar.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11267,6 +11413,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -11278,7 +11429,13 @@ exports.default = void 0;
 //
 var _default = {
   name: "CardTask",
-  props: ['tugas']
+  props: ['tugas'],
+  methods: {
+    edit: function edit(id) {
+      localStorage.setItem('taskId', id);
+      this.$emit('editPage', this.tugas);
+    }
+  }
 };
 exports.default = _default;
         var $852a30 = exports.default || module.exports;
@@ -11296,21 +11453,24 @@ exports.default = _default;
   return _c("div", { attrs: { id: "card_task" } }, [
     _c("p", { staticClass: "card-header" }, [_vm._v(_vm._s(_vm.tugas.title))]),
     _vm._v(" "),
-    _vm._m(0)
+    _c("div", { staticClass: "card-body" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary btn-sm",
+          attrs: { href: "#" },
+          on: {
+            click: function($event) {
+              return _vm.edit(_vm.tugas.id)
+            }
+          }
+        },
+        [_vm._v("edit")]
+      )
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("a", { staticClass: "btn btn-primary btn-sm", attrs: { href: "#" } }, [
-        _vm._v("edit")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
           return {
@@ -11343,7 +11503,7 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/TaskLists.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/TaskLists.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11371,6 +11531,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: 'TaskLists',
   props: ['category', 'assignments'],
@@ -11384,6 +11545,9 @@ var _default = {
       return this.assignments.filter(function (task) {
         return task.category === _this.category;
       });
+    },
+    editTask: function editTask(data) {
+      this.$emit('emitEdit', data);
     }
   }
 };
@@ -11411,7 +11575,8 @@ exports.default = _default;
       _vm._l(_vm.taskFilter(), function(task) {
         return _c("TaskCard", {
           key: task.id,
-          attrs: { tugas: task, id: "taskBox" }
+          attrs: { tugas: task, id: "taskBox" },
+          on: { editPage: _vm.editTask }
         })
       })
     ],
@@ -11475,12 +11640,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: 'Board',
   data: function data() {
     return {
       categories: ['backlog', 'to-do', 'doing', 'done']
     };
+  },
+  methods: {
+    edit: function edit(data) {
+      this.$emit('editTask', data);
+    }
   },
   props: ['tasks'],
   components: {
@@ -11506,7 +11677,8 @@ exports.default = _default;
       return _c("TaskLists", {
         key: i,
         staticClass: "shadow-lg p-3 mb-5 bg-white rounded",
-        attrs: { category: category, assignments: _vm.tasks, id: "boardTask" }
+        attrs: { category: category, assignments: _vm.tasks, id: "boardTask" },
+        on: { emitEdit: _vm.edit }
       })
     }),
     1
@@ -11545,7 +11717,7 @@ render._withStripped = true
       
       }
     })();
-},{"./TaskLists":"components/TaskLists.vue","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/App.vue":[function(require,module,exports) {
+},{"./TaskLists":"components/TaskLists.vue","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/AddTask.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11554,14 +11726,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
-
-var _Navbar = _interopRequireDefault(require("./Navbar"));
-
-var _Login = _interopRequireDefault(require("./Login"));
-
-var _Register = _interopRequireDefault(require("./Register"));
-
-var _Board = _interopRequireDefault(require("./Board"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11575,18 +11739,191 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
+  name: 'AddTask',
+  data: function data() {
+    return {
+      title: '',
+      status: ''
+    };
+  },
+  methods: {
+    addTask: function addTask() {
+      var _this = this;
+
+      (0, _axios.default)({
+        url: "http://localhost:3000/tasks",
+        method: 'post',
+        data: {
+          title: this.title,
+          category: this.status
+        },
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      }).then(function (response) {
+        _this.$emit('addDone', 'home');
+
+        _this.$emit('fetchNewData', 'newData');
+      }).catch(function (err) {
+        console.log(err);
+      });
+      this.title = '';
+      this.status = '';
+    }
+  }
+};
+exports.default = _default;
+        var $78daf0 = exports.default || module.exports;
+      
+      if (typeof $78daf0 === 'function') {
+        $78daf0 = $78daf0.options;
+      }
+    
+        /* template */
+        Object.assign($78daf0, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h1", [_vm._v("Create New Task")]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "shadow-lg p-3 mb-5 bg-white rounded",
+        attrs: { id: "form-create" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.addTask($event)
+          }
+        }
+      },
+      [
+        _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.title,
+              expression: "title"
+            }
+          ],
+          staticClass: "form-control form-control-sm",
+          attrs: { type: "text" },
+          domProps: { value: _vm.title },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.title = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("button", [_vm._v("Create")])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$78daf0', $78daf0);
+          } else {
+            api.reload('$78daf0', $78daf0);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"axios":"node_modules/axios/index.js","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/App.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _EditPage = _interopRequireDefault(require("./EditPage"));
+
+var _Navbar = _interopRequireDefault(require("./Navbar"));
+
+var _Login = _interopRequireDefault(require("./Login"));
+
+var _Register = _interopRequireDefault(require("./Register"));
+
+var _Board = _interopRequireDefault(require("./Board"));
+
+var _AddTask = _interopRequireDefault(require("./AddTask"));
+
+var _TaskCard = _interopRequireDefault(require("./TaskCard"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: 'Gate',
   data: function data() {
     return {
       currentPage: 'login',
-      tasks: []
+      tasks: [],
+      editTask: {}
     };
   },
   components: {
     Navbar: _Navbar.default,
     Login: _Login.default,
     Register: _Register.default,
-    Board: _Board.default
+    Board: _Board.default,
+    EditPage: _EditPage.default,
+    TaskCard: _TaskCard.default,
+    AddTask: _AddTask.default
   },
   methods: {
     changePage: function changePage(page) {
@@ -11606,6 +11943,10 @@ var _default = {
       }).catch(function (err) {
         console.log(err);
       });
+    },
+    editData: function editData(data) {
+      this.editTask = data;
+      this.currentPage = 'edit';
     }
   },
   created: function created() {
@@ -11668,7 +12009,41 @@ exports.default = _default;
         : _vm._e(),
       _vm._v(" "),
       _vm.currentPage === "home"
-        ? _c("Board", { attrs: { tasks: _vm.tasks, id: "board" } })
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  return _vm.changePage("create")
+                }
+              }
+            },
+            [_vm._v("Add Task")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.currentPage === "home"
+        ? _c("Board", {
+            attrs: { tasks: _vm.tasks, id: "board" },
+            on: { editTask: _vm.editData }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.currentPage === "create"
+        ? _c("AddTask", {
+            attrs: { id: "create-page" },
+            on: {
+              addDone: function($event) {
+                return _vm.changePage("home")
+              },
+              fetchNewData: _vm.fetchTask
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.currentPage === "edit"
+        ? _c("EditPage", { attrs: { editData: _vm.editTask } })
         : _vm._e()
     ],
     1
@@ -11707,7 +12082,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","./Navbar":"components/Navbar.vue","./Login":"components/Login.vue","./Register":"components/Register.vue","./Board":"components/Board.vue","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/main.js":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","./EditPage":"components/EditPage.vue","./Navbar":"components/Navbar.vue","./Login":"components/Login.vue","./Register":"components/Register.vue","./Board":"components/Board.vue","./AddTask":"components/AddTask.vue","./TaskCard":"components/TaskCard.vue","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/main.js":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
@@ -11749,7 +12124,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36597" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33963" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

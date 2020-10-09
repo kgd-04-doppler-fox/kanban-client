@@ -6,6 +6,7 @@
     :assignments="tasks"
     class="shadow-lg p-3 mb-5 bg-white rounded" 
     id="boardTask"
+    @emitEdit="edit"
     ></TaskLists>
   </div>
 </template>
@@ -19,6 +20,11 @@ export default {
         return {
             categories: ['backlog', 'to-do', 'doing', 'done']
         }
+    },
+    methods: {
+      edit(data){
+        this.$emit('editTask', data)
+      }
     },
     props: ['tasks'],
     components :{
