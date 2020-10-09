@@ -9,7 +9,7 @@ const app = new Vue ({
         tasksToDo: [],
         tasksDoing: [],
         tasksDone: [],
-        taskId: 0
+        title:''
     },
     methods: {
         login() {
@@ -27,11 +27,33 @@ const app = new Vue ({
                 this.fetchTask()
             })
             .catch (err => {
-                console.log(err, 'error login')
+                console.log(err)
+            })
+        },
+        register() {
+            axios({
+                url: `${this.baseUrl}/register`,
+                method: 'post',
+                data: {
+                    email: this.email,
+                    password: this.password
+                }
+            })
+            .then(({data}) => {
+                localStorage.removeItem('register_token')
+                this.page = 'login-page'
+                this.fetchTask()
+            })
+            .catch (err => {
+                console.log(err)
             })
         },
         logout() {
             localStorage.clear()
+            this.tasksBacklog = []
+            this.tasksToDo = []
+            this.tasksDoing = []
+            this.tasksDone = []
             this.page = 'login-page'
         },
         fetchTask() {
@@ -59,21 +81,115 @@ const app = new Vue ({
                 console.log(err)
             })
         },
-        update() {
+        updateBacklog(id) {
             axios({
-                url: `${this.baseUrl}/tasks/${this.taskId}`,
+                url: `${this.baseUrl}/tasks/${id}`,
                 method: 'patch',
                 data: {
                     category: "todo"
+                },
+                headers: {
+                    access_token: localStorage.access_token
                 }
             })
             .then (({data}) => {
-                console.log(data)
+                this.tasksBacklog = []
+                this.tasksToDo = []
+                this.tasksDoing = []
+                this.tasksDone = []
                 this.page = 'home-page'
                 this.fetchTask()
             })
             .catch (err => {
-                console.log(this.taskId)
+                console.log(id)
+            })
+        },
+        updateToDo(id) {
+            axios({
+                url: `${this.baseUrl}/tasks/${id}`,
+                method: 'patch',
+                data: {
+                    category: "doing"
+                },
+                headers: {
+                    access_token: localStorage.access_token
+                }
+            })
+            .then (({data}) => {
+                this.tasksBacklog = []
+                this.tasksToDo = []
+                this.tasksDoing = []
+                this.tasksDone = []
+                this.page = 'home-page'
+                this.fetchTask()
+            })
+            .catch (err => {
+                console.log(err)
+            })
+        },
+        updateDoing(id) {
+            axios({
+                url: `${this.baseUrl}/tasks/${id}`,
+                method: 'patch',
+                data: {
+                    category: "done"
+                },
+                headers: {
+                    access_token: localStorage.access_token
+                }
+            })
+            .then (({data}) => {
+                this.tasksBacklog = []
+                this.tasksToDo = []
+                this.tasksDoing = []
+                this.tasksDone = []
+                this.page = 'home-page'
+                this.fetchTask()
+            })
+            .catch (err => {
+                console.log(err)
+            })
+        },
+        deleteTask(id) {
+            axios({
+                url: `${this.baseUrl}/tasks/${id}`,
+                method: 'delete',
+                headers: {
+                    access_token: localStorage.access_token
+                }
+            })
+            .then (({data}) => {
+                console.log(id)
+                this.tasksBacklog = []
+                this.tasksToDo = []
+                this.tasksDoing = []
+                this.tasksDone = []
+                this.page = 'home-page'
+                this.fetchTask()
+            })
+            .catch (err => {
+                console.log(err)
+            })
+        },
+        new_task() {
+            axios({
+                url: `${this.baseUrl}/tasks`,
+                method: 'post',
+                data: {
+                    title: this.title
+                },
+                headers: {
+                    access_token: localStorage.access_token
+                }
+            })
+            .then (({data}) => {
+                localStorage.removeItem('add_token')
+                this.tasksBacklog = []
+                this.tasksToDo = []
+                this.tasksDoing = []
+                this.tasksDone = []
+                this.page = 'home-page'
+                this.fetchTask()
             })
         },
         to_register() {

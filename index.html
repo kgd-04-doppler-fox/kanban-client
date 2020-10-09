@@ -12,7 +12,7 @@
         <form @submit.prevent="login" class="login-form">
             <label class="label">Email</label>
             <br>
-            <input v-model="email" class="input" type="email">
+            <input v-model="email" class="input" type="email" placeholder="example@mail.com">
             <br>
             <br>
             <label class="label">Password</label>
@@ -21,21 +21,21 @@
             <br>
             <input class="button" type="submit" value="Sign In">
             <br>
-            <a class="to-register">Didnt have an account ?</a>  <a @click="to_register" class="to-register" href="#">Sign Up</a>
+            <a class="to-register">Didnt have an account ?</a>  <a @click.prevent="to_register" class="to-register" href="#">Sign Up</a>
         </form>
     </div>
     <div v-else-if="page == 'register-page'" id="register">
-        <form class="login-form">
+        <form @submit.prevent="register" class="login-form">
             <label class="label">Email</label>
             <br>
-            <input class="input" type="email">
+            <input v-model="email" class="input" type="email" placeholder="your email">
             <br>
             <br>
             <label class="label">Password</label>
             <br>
-            <input class="input" type="password">
+            <input v-model="password" class="input" type="password" placeholder="your password">
             <br>
-            <input class="button" type="submit" value="SignUp"> <button @click="to_login" class="button2">Cancel</button>
+            <input class="button" type="submit" value="SignUp"> <button @click.prevent="to_login" class.prevent="button2">Cancel</button>
         </form>
     </div>
     <div v-else-if="page == 'home-page'" id="home">
@@ -44,14 +44,14 @@
             <button @click="logout" class="logout">Logout</button>
         </nav>
         <br>
-        <button class="new-task">New Task</button>
+        <button @click.prevent="to_addTask" class="new-task">New Task</button>
         <section class="content">
             <table>
                 <tr>
                     <th>Backlog</th>
                 </tr>
-                <tr v-for="task in tasksBacklog">
-                    <td>{{ task.title }}<br><button>Update</button> | <button>Delete</button></td>
+                <tr v-for="task in tasksBacklog" v-bind:key="task.id">
+                    <td>{{ task.title }}<br><button v-on:click.prevent="updateBacklog(task.id)" >Update</button> | <button v-on:click.prevent="deleteTask(task.id)" >Delete</button></td>
                 </tr>
             </table>
             <table>
@@ -59,7 +59,7 @@
                     <th>To-Do</th>
                 </tr>
                 <tr v-for="task in tasksToDo">
-                    <td>{{ task.title }}<br><button>Update</button> | <button>Delete</button></td>
+                    <td>{{ task.title }}<br><button v-on:click.prevent="updateToDo(task.id)" >Update</button> | <button v-on:click.prevent="deleteTask(task.id)" >Delete</button></td>
                 </tr>
             </table>
             <table>
@@ -67,7 +67,7 @@
                     <th>Doing</th>
                 </tr>
                 <tr v-for="task in tasksDoing">
-                    <td>{{ task.title }}<br><button>Update</button> | <button>Delete</button></td>
+                    <td>{{ task.title }}<br><button v-on:click.prevent="updateDoing(task.id)" >Update</button> | <button v-on:click.prevent="deleteTask(task.id)" >Delete</button></td>
                 </tr>
             </table>
             <table>
@@ -75,25 +75,20 @@
                     <th>Done</th>
                 </tr>
                 <tr v-for="task in tasksDone">
-                    <td>{{ task.title }}<br><button>Update</button> | <button>Delete</button></td>
+                    <td>{{ task.title }}<br><button v-on:click.prevent="deleteTask(task.id)" >Delete</button></td>
                 </tr>
             </table>
         </section>
     </div>
     <div v-else="page = 'add-page'" id="new-task">
-        <form class="login-form">
+        <form @submit.prevent="new_task" class="login-form">
             <h2 style="position: relative;left: 215px;font-family: Arial, Helvetica, sans-serif;top: 20px;">New Task</h2>
             <br>
             <label class="label">Title</label>
             <br>
-            <input class="input" type="text">
+            <input  v-model="title"  class="input" type="text">
             <br>
-            <br>
-            <label class="label">Description</label>
-            <br>
-            <input class="input" type="text">
-            <br>
-            <input class="button" type="submit" value="Save"> <input class="button" type="reset" value="Cancel">
+            <input class="button" type="submit" value="Save"> <input class="button2" type="reset" value="Cancel">
         </form>
     </div>
     </section>
