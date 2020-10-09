@@ -58,9 +58,21 @@ export default {
   },
   methods: {
     OnGoogleAuthSuccess(idToken) {
-      console.log(idToken);
-      localStorage.setItem('access_token', idToken)
-      // Receive the idToken and make your magic with the backend
+      var id_token = googleUser.getAuthResponse().id_token;
+      axios({
+        url: `http://localhost:3000/googlesignin`,
+        method: "post",
+        data: {
+          access_token: id_token,
+        },
+      })
+        .then((response) => {
+          localStorage.setItem("access_token", response.data.access_token);
+          this.$emit("changePage", "homePage");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     OnGoogleAuthFail(error) {
       console.log(error);
