@@ -67,7 +67,7 @@ export default {
         },
         fetchTask() {
             axios({
-                url: `http://localhost:3000/tasks`,
+                url: `http://localhost:3000/tasks`,//https://hidden-oasis-44746.herokuapp.com =>url heroku
                 method: 'get',
                 headers: {
                     access_token: localStorage.access_token

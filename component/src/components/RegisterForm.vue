@@ -31,7 +31,7 @@ name: 'RegisterForm',
     methods: {
         register() {
             axios({
-                url: `http://localhost:3000/register`,
+                url: `http://localhost:3000/register`,//https://hidden-oasis-44746.herokuapp.com =>url heroku
                 method: 'post',
                 data: {
                     email: this.user.email,

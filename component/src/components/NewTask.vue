@@ -31,7 +31,7 @@ export default {
     methods: {
         new_task() {
             axios({
-                url: `http://localhost:3000/tasks`,
+                url: `http://localhost:3000/tasks`,//https://hidden-oasis-44746.herokuapp.com =>url heroku
                 method: 'post',
                 data: {
                     title: this.task.title
