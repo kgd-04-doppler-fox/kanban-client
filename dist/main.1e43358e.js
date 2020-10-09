@@ -10882,6 +10882,7 @@ var _default = {
         }
       }).then(function (user) {
         localStorage.setItem("token", user.data.token);
+        localStorage.setItem('email', user.data.email);
 
         _this2.$emit('changePage', 'main-page');
       }).catch(function (err) {
@@ -17164,7 +17165,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42615" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35875" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

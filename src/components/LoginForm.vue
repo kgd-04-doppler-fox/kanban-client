@@ -69,6 +69,7 @@ export default {
             })
             .then(user => {
                 localStorage.setItem("token", user.data.token)
+                localStorage.setItem('email', user.data.email)
                 this.$emit('changePage', 'main-page')
             })
             .catch(err =>{
