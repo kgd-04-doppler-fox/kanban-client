@@ -59,5 +59,7 @@ export default {
 </script>
 
 <style>
-
+    h3{
+        color: black;
+    }
 </style>
