@@ -14,6 +14,8 @@
             <br>
             <a class="to-register">Didnt have an account ?</a>  <a @click.prevent="to_register" class="to-register" href="#">Sign Up</a>
         </form>
+        <br>
+        <button v-google-signin-button="clientId" class="google-signin-button"> Continue with Google</button>
     </div>
 </template>
 
@@ -26,7 +28,8 @@ export default {
         return {
             user: {
                 email: '',
-                password: ''
+                password: '',
+                clientId: '367296612879-rnq7d81443gd2ip4fqqltttpq32d73rn.apps.googleusercontent.com'
             }
         }
     },
@@ -51,11 +54,29 @@ export default {
         to_register() {
             localStorage.setItem('register_token','register')
             this.$emit('toRegister','register-page')
+        },
+        OnGoogleAuthSuccess (idToken) {
+            localStorage.setItem('idToken',idToken)
+            this.$emit('googleSignIn','home-page')
+        },
+        OnGoogleAuthFail (error) {
+            console.log(error,'token')
         }
     }
 }
 </script>
 
 <style>
-
+    .google-signin-button {
+        color: rgb(212, 8, 8);
+        background-color: rgb(0, 255, 213);
+        height: 50px;
+        font-size: 20px;
+        border-radius: 10px;
+        padding: 10px 20px 25px 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        position: relative;
+        left: 525px;
+        top: 100px;
+    }
 </style>

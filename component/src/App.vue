@@ -1,6 +1,6 @@
 <template>
   <div>
-      <LoginForm v-if="currentPage==='login-page'" @changePage="changePage" @toRegister="changePage"></LoginForm>
+      <LoginForm v-if="currentPage==='login-page'" @changePage="changePage" @toRegister="changePage" @googleSignIn="changePage"></LoginForm>
       <RegisterForm v-else-if="currentPage==='register-page'" @successRegister="changePage" @cancelRegister="changePage"></RegisterForm>
       <HomePage v-else-if="currentPage==='home-page'" @logoutSuccess="changePage" @toNewTask="changePage"></HomePage>
       <NewTask v-else @addNew="changePage" @cancelCreate="changePage"></NewTask>
@@ -32,12 +32,12 @@ export default {
         RegisterForm
     },
     created() {
-        if(localStorage.access_token && !localStorage.register_token && !localStorage.add_token){
+        if(localStorage.access_token || idToken && !localStorage.register_token && !localStorage.add_token){
             this.changePage('home-page')
             // this.fetchTask()
         }else if (!localStorage.access_token && localStorage.register_token && !localStorage.add_token){
             this.changePage('register-page')
-        }else if (localStorage.access_token && !localStorage.register_token && localStorage.add_token){
+        }else if (localStorage.access_token || idToken && !localStorage.register_token && localStorage.add_token){
             this.changePage('add-page')
         }else {
             this.changePage('login-page')
