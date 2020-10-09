@@ -2,7 +2,7 @@
     <div class="row">
         <nav class="col-10 mx-auto navbar navbar-dark bg-dark">
             <button type="button" class="btn btn-primary" @click="addTask">New Task +</button>
-            <h3 class="h3"> {{this.userEmail}} </h3>
+            <h3 class="h3 username"> {{this.userEmail}} </h3>
             <button type="button" class="btn btn-warning" @click="logout">Logout</button>
         </nav>
     </div>
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style>
-    h3{
+    .username{
         color: aliceblue;
     }
 </style>

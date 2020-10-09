@@ -8946,7 +8946,7 @@ exports.default = _default;
         [_vm._v("New Task +")]
       ),
       _vm._v(" "),
-      _c("h3", { staticClass: "h3" }, [
+      _c("h3", { staticClass: "h3 username" }, [
         _vm._v(" " + _vm._s(this.userEmail) + " ")
       ]),
       _vm._v(" "),
@@ -17165,7 +17165,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46803" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34393" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
