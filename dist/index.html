@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="419148580155-l4a8am6ev1u521kdp14vjnuodvalob6m.apps.googleusercontent.com">
+    <title>KamVan</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
+    <link rel="stylesheet" href="/main.af46ece4.css">
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+<script src="/main.af46ece4.js"></script></head>
+
+<body>
+    <div id="test-vue">
+
+    
+
+    <!-- SignUp done v.onclick prevent-->
+    <div class="modal fade" id="modalSignup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Signup</h5>
+                    <button type="button" class="close" id="closeSignup" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form id="signupForm" @submit.prevent="signup">
+                            <div class="form-group">
+                                <label for="nameSignup">Name</label>
+                                <input type="name" class="form-control" v-model="nameSignup" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailSignup">Email address</label>
+                                <!-- Alert Email Sign Up -->
+                                <div id="alertEmailSignUp">
+                                    
+                                </div>
+                                <input type="email" class="form-control" v-model="emailSignup" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordSignup">Password</label>
+                                <input type="password" class="form-control" v-model="passwordSignup" placeholder="Password">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SignIn done v.onclick prevent-->
+    <div class="modal fade" id="signinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Signin</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeSignin">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="container">
+                            <form id="signinForm" @submit.prevent="signin">
+                                <div class="form-group">
+                                    <label for="emailSignin">Email address</label>
+                                    
+                                    <input type="email" class="form-control" v-model="emailSignin" aria-describedby="emailHelp" placeholder="Enter email">
+                                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                        anyone else.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="passwordSignin">Password</label>
+                                    <input type="password" class="form-control" v-model="passwordSignin" placeholder="Password">
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                                <p v-html="errmessage"></p>
+                            </form>
+                            <div class="text-center m-2">
+                                <small>OR</small>
+                            </div>
+
+                            <!-- GOOGLE SIGN -->
+                            <div id="gSignin" class="text-center">
+                                <div id="customBtn" class="g-signin2" data-onsuccess="onSignIn">
+                                    <span class="icon"></span>
+                                    <span class="buttonText">Google</span>
+                                </div>
+                            </div>
+                            
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Jumbotron -->
+    <div class="jumbotron Centered jumbotron-fluid outside" v-if="!isLogin">
+        <div class="container">
+          <h1 class="display-4">Kanban Sensei</h1>
+          <p class="lead">This is a Kanban Application to works with a group of team or solo by yourself(don't be sad)</p>
+          <small id="emailHelp" class="form-text text-muted">Start by clicking sign in or sign up on right top</small>
+        </div>
+    </div>
+
+    <!-- Add Task done prevent -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-body" id="exampleModalLabel">Create Todo</h5>
+                    <button type="button" class="close" id="closeCreate" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form id="createForm" @submit.prevent="create">
+                            <div class="form-group">
+                                <label class="text-body">Title:</label>
+                                <input type="text" class="form-control" v-model="titleCreate" placeholder="Ex: Migration Database">
+                            </div>
+                
+                            <div class="form-group">
+                                <label class="text-body">Description:</label>
+                                <input type="text" class="form-control" v-model="descriptionCreate" placeholder="Ex: Ruri, Finish Prototype UI">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-body">Category:</label>
+                                <input type="text" class="form-control" v-model="categoryCreate" placeholder="FrontEnd, BackEnd, DevOps">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-body">Status:</label>
+                                <select class="custom-select" v-model="statusCreate">
+                                    <option value="1">Backlog</option>
+                                    <option value="2">Todo</option>
+                                    <option value="3">Doing</option>
+                                    <option value="4">Done</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div id="alertDate"> 
+
+                                </div>
+                                <label class="text-body">Due Date:</label><br>
+                                <input type="date" v-model="dateCreate" min="new Date().getUTCDate()">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App --> 
+    <section v-if="isLogin" class="container">   
+        <div class="flex-container">
+           <!-- Backlog -->
+            <div class="card col-3 p-3" style="max-width: 20rem;">
+                <div class="card-header m-3 bg-danger">
+                    <h1 class="text-center white">Backlog</h1>
+                </div>
+                <!-- 1 Hour 10 min with mas arnold video -->
+                <div>
+                    <div v-for="task in tasks" class="card border-black" :key="task.id">
+                        <p>{{task.title}}</p>
+                        <p>{{task.category}}</p>                   
+                        
+                        <div class="flex-button">
+                        <button class="btn-warning" href="#" data-toggle="modal" data-target="#backlogModal">Back</button>
+                        <button class="btn-success" href="#" data-toggle="modal" data-target="#backlogModal">Next</button>
+                        <button class="btn-danger" href="#" data-toggle="modal" data-target="#backlogModal">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/platform.js" async="" defer=""></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+
+
+    <script>var baseUrl = 'http://localhost:3000';
+var app = new Vue({
+  el: '#test-vue',
+  data: {
+    isLogin: false,
+    errmessage: '',
+    emailSignin: '',
+    passwordSignin: '',
+    tasks: []
+  },
+  methods: {
+    signin: function signin() {
+      var _this = this;
+
+      axios({
+        method: 'POST',
+        url: "".concat(baseUrl, "/users/login"),
+        data: {
+          email: this.emailSignin,
+          password: this.passwordSignin
+        }
+      }).then(function (_ref) {
+        var data = _ref.data;
+        localStorage.setItem('access_token', data.access_token);
+        _this.isLogin = true;
+
+        _this.fetchTasks();
+      }).catch(function (err) {
+        console.log(err);
+      });
+      this.emailSignin = '', this.passwordSignin = '';
+    },
+    fetchTasks: function fetchTasks() {
+      var _this2 = this;
+
+      axios({
+        method: 'GET',
+        url: "".concat(baseUrl, "/tasks"),
+        headers: {
+          access_token: localStorage.access_token
+        }
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.tasks = data.task;
+        console.log(data);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    logout: function logout() {
+      this.isLogin = false;
+      localStorage.clear();
+    }
+  },
+  computed: {},
+  created: function created() {
+    if (localStorage.access_token) {
+      this.isLogin = true;
+      this.fetchTasks();
+    } else {
+      this.isLogin = false;
+    }
+  }
+});</script>
+</body>
+
+</html>
