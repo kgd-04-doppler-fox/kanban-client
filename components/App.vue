@@ -5,11 +5,9 @@
       <Register v-if="currentPage === 'register'"></Register>
 
       <h1 v-if="currentPage === 'home'" id="home_title">Task Lists</h1>
-      <button class="btn btn-primary" v-if="currentPage === 'home'" @click="changePage('create')" >Add Task</button>
-
-      <Board v-if="currentPage === 'home'" :tasks="tasks" id="board" @editTask="editData" ></Board>
+      <Board v-if="currentPage === 'home'" :tasks="tasks" id="board" @editTask="editData" @addTask="changePage('create')"></Board>
       <AddTask id="create-page" v-if="currentPage === 'create'"  @addDone="changePage('home')" @fetchNewData="fetchTask" ></AddTask>
-      <EditPage v-if="currentPage === 'edit'" :editData="editTask"></EditPage>
+      <EditPage v-if="currentPage === 'edit'" :editData="editTask" @editSuccess="changePage('home')"></EditPage>
 
   </div>
 </template>
@@ -45,6 +43,7 @@ export default {
     methods : {
         changePage(page){
             this.currentPage = page
+            this.fetchTask()
         },
 
         fetchTask(){
@@ -62,7 +61,7 @@ export default {
                 console.log(err)
             })
         },
-        
+
         editData(data){
             this.editTask = data
             this.currentPage = 'edit'
@@ -72,8 +71,7 @@ export default {
         if(localStorage.getItem('access_token')){
             this.changePage('home')
             this.fetchTask()
-        }
-        else {
+        }else {
             this.changePage('login')
         }
     }
@@ -81,22 +79,24 @@ export default {
 </script>
 
 <style scope>
+
+
     #board{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
     margin-top: 20px;
-    
+    }
 
-    };
+    #addBtn{
+        margin-left: auto;
+    }
 
     #home_title{
       text-align: center;
       margin-top: 30px;
       font-family: 'Poppins', sans-serif;
-    };
+    }
 
-    #create-page{
-        width: 300px
-    };
+    
 </style>

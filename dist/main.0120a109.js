@@ -10698,34 +10698,68 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 var _default = {
   name: "EditPage",
   props: ['editData'],
   data: function data() {
     return {
       buttonR: '',
-      buttonL: ''
+      buttonL: '',
+      statusEdit: '',
+      colorFont: 'transparent'
     };
   },
   methods: {
-    edit: function edit() {
+    changeStatus: function changeStatus(cond) {
+      if (cond === 'R') {
+        this.statusEdit = this.buttonR;
+        this.edit(this.editData.id);
+      } else {
+        this.statusEdit = this.buttonL;
+        this.edit(this.editData.id);
+      }
+    },
+    edit: function edit(id) {
       var _this = this;
 
-      this.currentPage = 'edit';
-      var id = localStorage.getItem('taskId');
       (0, _axios.default)({
         url: "http://localhost:3000/tasks/".concat(id),
-        method: 'get',
+        method: 'put',
+        data: {
+          category: this.statusEdit.toLowerCase()
+        },
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       }).then(function (response) {
-        console.log(response.task);
-        _this.editTask = response;
-        currentStatus = response.status;
+        _this.$emit('editSuccess', 'home');
+
+        localStorage.removeItem('edit');
       }).catch(function (err) {
+        _this.colorFont = 'red';
         console.log(err);
       });
+    },
+    deleteTask: function deleteTask(id) {
+      var _this2 = this;
+
+      (0, _axios.default)({
+        url: "http://localhost:3000/tasks/".concat(id),
+        method: 'delete',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      }).then(function (response) {
+        _this2.$emit('editSuccess', 'home');
+      }).catch(function (err) {
+        console.log(err);
+        _this2.colorFont = 'red';
+      });
+    },
+    resetError: function resetError() {
+      this.colorFont = 'transparent';
     }
   },
   created: function created() {
@@ -10760,34 +10794,75 @@ exports.default = _default;
     {
       staticClass: "shadow-lg p-3 mb-5 bg-white rounded",
       staticStyle: { width: "500px", margin: "auto", "margin-top": "60px" },
-      attrs: { id: "start-page" }
+      attrs: { id: "start-page" },
+      on: { click: _vm.resetError }
     },
     [
-      _c("p", [_vm._v("Task Description")]),
+      _c("h1", { attrs: { id: "editHead" } }, [_vm._v("Edit Task")]),
+      _vm._v(" "),
+      _c("p", { style: { color: _vm.colorFont }, attrs: { id: "errorMsg" } }, [
+        _vm._v("Unauthorized Access")
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
       _vm._v(" "),
       _c("p", [_vm._v(_vm._s(_vm.editData.title))]),
       _vm._v(" "),
       _c("div", [
         _vm.editData.category !== "backlog"
-          ? _c("button", { staticClass: "btn btn-outline-warning btn-sm" }, [
-              _vm._v(_vm._s(_vm.buttonL))
-            ])
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-warning btn-sm",
+                on: {
+                  click: function($event) {
+                    return _vm.changeStatus("L")
+                  }
+                }
+              },
+              [_vm._v(_vm._s(_vm.buttonL))]
+            )
           : _vm._e(),
         _vm._v(" "),
-        _c("button", { staticClass: "btn btn-outline-danger btn-sm" }, [
-          _vm._v("Delete")
-        ]),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-outline-danger btn-sm",
+            on: {
+              click: function($event) {
+                return _vm.deleteTask(_vm.editData.id)
+              }
+            }
+          },
+          [_vm._v("Delete")]
+        ),
         _vm._v(" "),
         _vm.editData.category !== "done"
-          ? _c("button", { staticClass: "btn btn-outline-success btn-sm" }, [
-              _vm._v(_vm._s(_vm.buttonR))
-            ])
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-success btn-sm",
+                on: {
+                  click: function($event) {
+                    return _vm.changeStatus("R")
+                  }
+                }
+              },
+              [_vm._v(_vm._s(_vm.buttonR))]
+            )
           : _vm._e()
       ])
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("b", [_vm._v("Task Description")])])
+  }
+]
 render._withStripped = true
 
           return {
@@ -10881,7 +10956,7 @@ exports.default = _default;
         [_vm._v("Kanban")]
       ),
       _vm._v(" "),
-      _vm.page === "home"
+      _vm.page === "home" || _vm.page === "edit" || _vm.page === "create"
         ? _c(
             "button",
             {
@@ -10939,7 +11014,12 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/Login.vue":[function(require,module,exports) {
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/vue-google-login/dist/vue-google-login.min.js":[function(require,module,exports) {
+var define;
+!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e((t=t||self)["vue-google-login"]={})}(this,(function(t){"use strict";var e,n,i=function(t){return e?Promise.resolve(e):(n||(n=function(t){return new Promise((function(n,i){window.onGapiLoad=function(){window.gapi.load("auth2",(function(){try{e=window.gapi.auth2.init(Object.assign({},t))}catch(t){i({err:"client_id missing or is incorrect, or if you added extra params maybe they are written incorrectly, did you add it to the component or plugin?"})}n(e)}))}}))}(t)),n)},o=function(t,e){if(t)return t[e]();return Promise.reject({err:"Script not loaded correctly, did you added the plugin or the client_id to the component?"})},r={load:function(t){return Promise.all([i(t),new Promise((function(t,e){if(!document.getElementById("auth2_script_id")){var n=document.createElement("script");n.setAttribute("src","https://apis.google.com/js/platform.js?onload=onGapiLoad"),n.setAttribute("async",!0),n.setAttribute("defer","defer"),n.setAttribute("id","auth2_script_id"),document.head.appendChild(n)}t()}))]).then((function(t){return t[0]}))},signIn:function(){return o(e,"signIn")},signOut:function(){return o(e,"signOut")},isSignedIn:function(){return o(e.isSignedIn,"get")},currentUser:function(){return o(e.currentUser,"get")},grantOfflineAccess:function(){return o(e,"grantOfflineAccess")}},s=0;var u=function(t,e,n,i,o,r,s,u,c,d){"boolean"!=typeof s&&(c=u,u=s,s=!1);var a,l="function"==typeof n?n.options:n;if(t&&t.render&&(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,o&&(l.functional=!0)),i&&(l._scopeId=i),r?(a=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),e&&e.call(this,c(t)),t&&t._registeredComponents&&t._registeredComponents.add(r)},l._ssrRegister=a):e&&(a=s?function(){e.call(this,d(this.$root.$options.shadowRoot))}:function(t){e.call(this,u(t))}),a)if(l.functional){var f=l.render;l.render=function(t,e){return a.call(e),f(t,e)}}else{var h=l.beforeCreate;l.beforeCreate=h?[].concat(h,a):[a]}return n}({render:function(){var t=this.$createElement,e=this._self._c||t;return this.renderParams&&!this.logoutButton?e("div",{attrs:{id:this.id},on:{click:this.handleClick}}):e("button",{attrs:{id:this.id},on:{click:this.handleClick}},[this._t("default")],2)},staticRenderFns:[]},void 0,{name:"GoogleLogin",props:{params:{type:Object,required:!0},onCurrentUser:{type:Function,default:function(){}},onSuccess:{type:Function,default:function(){}},onFailure:{type:Function,default:function(){}},logoutButton:{type:Boolean,default:!1},renderParams:{type:Object,required:!1}},beforeCreate:function(){this.id="google-signin-btn-".concat(s++)},methods:{handleClick:function(){var t=this,e=this.logoutButton?"signOut":"signIn";r[e]().then((function(e){return t.onSuccess(e)})).catch((function(e){return t.onFailure(e)}))}},mounted:function(){var t=this;r.load(this.params).then((function(){t.renderParams&&!1===t.logoutButton&&window.gapi.signin2.render(t.id,t.renderParams),r.isSignedIn()&&t.onCurrentUser(r.currentUser())})).catch((function(t){console.log(t)}))}},void 0,!1,void 0,void 0,void 0),c={install:function(t,e){t.GoogleAuth=r.load(e)}};t.GoogleLogin=u,t.LoaderPlugin=c,t.default=u,Object.defineProperty(t,"__esModule",{value:!0})}));
+
+
+},{}],"components/Login.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10948,6 +11028,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _vueGoogleLogin = _interopRequireDefault(require("vue-google-login"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10967,14 +11049,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: "Login",
+  props: [],
   data: function data() {
     return {
       email_login: '',
       password_login: '',
-      errorLogin: 'transparent'
+      errorLogin: 'transparent',
+      params: {
+        client_id: "223469474641-suck9rvpamc0q98brh97ng0nr6li0631.apps.googleusercontent.com"
+      },
+      renderParams: {
+        width: 250,
+        height: 50,
+        longtitle: true
+      }
     };
+  },
+  components: {
+    GoogleLogin: _vueGoogleLogin.default
   },
   methods: {
     login: function login() {
@@ -11004,6 +11099,27 @@ var _default = {
     },
     signup: function signup() {
       this.$emit('registrationPage', 'register');
+    },
+    onSuccess: function onSuccess(googleUser) {
+      var _this2 = this;
+
+      var id_token = googleUser.getAuthResponse().id_token;
+      (0, _axios.default)({
+        url: "http://localhost:3000/googleSignIn",
+        method: 'post',
+        data: {
+          access_token: id_token
+        }
+      }).then(function (response) {
+        localStorage.setItem('access_token', response.data.access_token);
+
+        _this2.$emit('changePage', 'homePage');
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    onFailure: function onFailure() {
+      console.log("error");
     }
   }
 };
@@ -11108,6 +11224,26 @@ exports.default = _default;
       _c("hr"),
       _vm._v(" "),
       _c(
+        "GoogleLogin",
+        {
+          attrs: {
+            id: "google_btn",
+            params: _vm.params,
+            onSuccess: _vm.onSuccess,
+            onFailure: _vm.onFailure
+          }
+        },
+        [
+          _c("img", {
+            attrs: {
+              src: "https://img-authors.flaticon.com/google.jpg",
+              alt: ""
+            }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c(
         "p",
         { staticStyle: { "font-size": "small", "text-align": "center" } },
         [
@@ -11118,7 +11254,8 @@ exports.default = _default;
           _vm._v(" now")
         ]
       )
-    ]
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -11154,7 +11291,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/Register.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","vue-google-login":"node_modules/vue-google-login/dist/vue-google-login.min.js","_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"components/Register.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11430,9 +11567,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _default = {
   name: "CardTask",
   props: ['tugas'],
+  data: function data() {
+    return {
+      creatorName: ''
+    };
+  },
   methods: {
     edit: function edit(id) {
-      localStorage.setItem('taskId', id);
       this.$emit('editPage', this.tugas);
     }
   }
@@ -11451,14 +11592,16 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "card_task" } }, [
-    _c("p", { staticClass: "card-header" }, [_vm._v(_vm._s(_vm.tugas.title))]),
+    _c("p", { staticClass: "card-header", attrs: { id: "title_head" } }, [
+      _vm._v(_vm._s(_vm.tugas.title))
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
       _c(
         "a",
         {
           staticClass: "btn btn-primary btn-sm",
-          attrs: { href: "#" },
+          attrs: { id: "btn_edit", href: "#" },
           on: {
             click: function($event) {
               return _vm.edit(_vm.tugas.id)
@@ -11532,6 +11675,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
 var _default = {
   name: 'TaskLists',
   props: ['category', 'assignments'],
@@ -11548,6 +11694,9 @@ var _default = {
     },
     editTask: function editTask(data) {
       this.$emit('emitEdit', data);
+    },
+    addTask: function addTask() {
+      this.$emit('addTask', 'create');
     }
   }
 };
@@ -11578,7 +11727,19 @@ exports.default = _default;
           attrs: { tugas: task, id: "taskBox" },
           on: { editPage: _vm.editTask }
         })
-      })
+      }),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-outline-info btn-sm",
+            attrs: { id: "add" },
+            on: { click: _vm.addTask }
+          },
+          [_vm._v("+ Add Task")]
+        )
+      ])
     ],
     2
   )
@@ -11641,6 +11802,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 var _default = {
   name: 'Board',
   data: function data() {
@@ -11651,6 +11813,9 @@ var _default = {
   methods: {
     edit: function edit(data) {
       this.$emit('editTask', data);
+    },
+    addTask: function addTask() {
+      this.$emit('addTask', 'create');
     }
   },
   props: ['tasks'],
@@ -11678,7 +11843,7 @@ exports.default = _default;
         key: i,
         staticClass: "shadow-lg p-3 mb-5 bg-white rounded",
         attrs: { category: category, assignments: _vm.tasks, id: "boardTask" },
-        on: { emitEdit: _vm.edit }
+        on: { emitEdit: _vm.edit, addTask: _vm.addTask }
       })
     }),
     1
@@ -11788,8 +11953,6 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", [_vm._v("Create New Task")]),
-    _vm._v(" "),
     _c(
       "form",
       {
@@ -11803,6 +11966,8 @@ exports.default = _default;
         }
       },
       [
+        _c("h3", { attrs: { id: "createHead" } }, [_vm._v("Create New Task")]),
+        _vm._v(" "),
         _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
         _vm._v(" "),
         _c("input", {
@@ -11827,7 +11992,11 @@ exports.default = _default;
           }
         }),
         _vm._v(" "),
-        _c("button", [_vm._v("Create")])
+        _c(
+          "button",
+          { staticClass: "btn btn-warning mt-3", attrs: { id: "btn_create" } },
+          [_vm._v("Create")]
+        )
       ]
     )
   ])
@@ -11905,8 +12074,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
 var _default = {
   name: 'Gate',
   data: function data() {
@@ -11928,6 +12095,7 @@ var _default = {
   methods: {
     changePage: function changePage(page) {
       this.currentPage = page;
+      this.fetchTask();
     },
     fetchTask: function fetchTask() {
       var _this = this;
@@ -12009,24 +12177,14 @@ exports.default = _default;
         : _vm._e(),
       _vm._v(" "),
       _vm.currentPage === "home"
-        ? _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              on: {
-                click: function($event) {
-                  return _vm.changePage("create")
-                }
-              }
-            },
-            [_vm._v("Add Task")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.currentPage === "home"
         ? _c("Board", {
             attrs: { tasks: _vm.tasks, id: "board" },
-            on: { editTask: _vm.editData }
+            on: {
+              editTask: _vm.editData,
+              addTask: function($event) {
+                return _vm.changePage("create")
+              }
+            }
           })
         : _vm._e(),
       _vm._v(" "),
@@ -12043,7 +12201,14 @@ exports.default = _default;
         : _vm._e(),
       _vm._v(" "),
       _vm.currentPage === "edit"
-        ? _c("EditPage", { attrs: { editData: _vm.editTask } })
+        ? _c("EditPage", {
+            attrs: { editData: _vm.editTask },
+            on: {
+              editSuccess: function($event) {
+                return _vm.changePage("home")
+              }
+            }
+          })
         : _vm._e()
     ],
     1
@@ -12089,6 +12254,8 @@ var _vue = _interopRequireDefault(require("vue"));
 
 var _App = _interopRequireDefault(require("./App.vue"));
 
+var _vueGoogleLogin = require("vue-google-login");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 new _vue.default({
@@ -12096,7 +12263,10 @@ new _vue.default({
     return h(_App.default);
   }
 }).$mount('#app');
-},{"vue":"node_modules/vue/dist/vue.runtime.esm.js","./App.vue":"components/App.vue"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+new _vue.default.use(_vueGoogleLogin.LoaderPlugin, {
+  client_id: CLIENT_ID
+});
+},{"vue":"node_modules/vue/dist/vue.runtime.esm.js","./App.vue":"components/App.vue","vue-google-login":"node_modules/vue-google-login/dist/vue-google-login.min.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

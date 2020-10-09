@@ -1,10 +1,10 @@
 <template>
   <div>
-      <h1>Create New Task</h1>
       <form id="form-create" @submit.prevent="addTask" class="shadow-lg p-3 mb-5 bg-white rounded">
+      <h3 id="createHead">Create New Task</h3>
           <label for="title">Title</label>
           <input type="text" class="form-control form-control-sm" v-model="title">
-          <button>Create</button>
+          <button class="btn btn-warning mt-3" id="btn_create">Create</button>
       </form>
   </div>
 </template>
@@ -49,7 +49,20 @@ export default {
 </script>
 
 <style scope>
-    #form-create {
-        width: 200px;
+
+    #createHead{
+        text-align: center;
+        font-family: 'Raleway', sans-serif;
     }
+
+    #form-create {
+        width: 300px;
+        margin: auto;
+        margin-top:7%;
+    }
+
+    #btn_create{
+        margin: auto;
+    }
+
 </style>

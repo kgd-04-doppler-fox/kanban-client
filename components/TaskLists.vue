@@ -10,6 +10,9 @@
         id="taskBox"
         @editPage="editTask"
       ></TaskCard>
+      <div>
+          <button id="add" class="btn btn-outline-info btn-sm" @click="addTask">+ Add Task</button>
+      </div>
   </div>
 </template>
 
@@ -29,6 +32,9 @@ export default {
         },
         editTask(data){
             this.$emit('emitEdit', data)
+        },
+        addTask(){
+            this.$emit('addTask', 'create')
         }
 
     }
@@ -37,16 +43,22 @@ export default {
 
 <style scope>
   #headTask {
-      background: #FFC719 ;
+      background: #FFC300;
       padding: 7px;
       width: auto;
       text-align: center;
       font-family: 'Poppins', sans-serif;
       color: white;
+      border-radius: 70px;
   }
 
   #taskBox {
       border: solid #E6E6E6 1px;
       margin-bottom: 10px;
+  }
+
+  #add{
+      display: flex;
+      float: right;
   }
 </style>

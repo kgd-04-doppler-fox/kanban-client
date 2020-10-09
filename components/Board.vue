@@ -7,6 +7,7 @@
     class="shadow-lg p-3 mb-5 bg-white rounded" 
     id="boardTask"
     @emitEdit="edit"
+    @addTask="addTask"
     ></TaskLists>
   </div>
 </template>
@@ -24,7 +25,12 @@ export default {
     methods: {
       edit(data){
         this.$emit('editTask', data)
+      },
+      
+      addTask(){
+        this.$emit('addTask', 'create')
       }
+
     },
     props: ['tasks'],
     components :{

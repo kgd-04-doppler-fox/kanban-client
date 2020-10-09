@@ -10,21 +10,35 @@
             <button class="btn btn-primary btn-sm btn-block mt-3" >Login</button>
         </form>
         <hr>
+        <GoogleLogin id="google_btn" :params="params" :onSuccess="onSuccess" :onFailure="onFailure"><img src="https://img-authors.flaticon.com/google.jpg" alt=""></GoogleLogin>
         <p style="font-size:small; text-align: center;">Don't have an account? <a href="#" @click="signup">Sign up</a> now</p>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import GoogleLogin from 'vue-google-login'
 
 export default {
     name: `Login`,
+    props: [],
     data(){
         return {
             email_login: '',
             password_login: '',
             errorLogin: 'transparent',
+            params: {
+                client_id: "223469474641-suck9rvpamc0q98brh97ng0nr6li0631.apps.googleusercontent.com"
+            },
+            renderParams: {
+                width: 250,
+                height: 50,
+                longtitle: true
+            }
         }
+    },
+    components: {
+        GoogleLogin
     },
     methods: {
         login(){
@@ -54,12 +68,45 @@ export default {
 
         signup(){
             this.$emit('registrationPage', 'register')
+        },
+
+        onSuccess(googleUser) {
+            var id_token = googleUser.getAuthResponse().id_token;
+            axios({
+                url: `http://localhost:3000/googleSignIn`,
+                method: 'post',
+                data: {
+                    access_token: id_token
+                }
+            })
+            .then(response => {
+                localStorage.setItem('access_token', response.data.access_token)
+                this.$emit ('changePage', 'homePage')
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+
+        onFailure(){
+            console.log(`error`)
         }
     }
 
 }
 </script>
 
-<style>
+<style scope>
+    #google_btn{
+        background: white;
+        width: 215px;
+        border-radius: 5px;
+        border: solid gainsboro 1px;
+        margin-bottom: 10px;
+        
+    }
 
+    img{
+        width: 30px;
+    }
 </style>

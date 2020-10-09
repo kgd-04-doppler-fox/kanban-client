@@ -1,11 +1,13 @@
 <template>
-  <div class="shadow-lg p-3 mb-5 bg-white rounded" style="width: 500px; margin:auto; margin-top: 60px;" id="start-page" >
-    <p>Task Description</p>
+  <div class="shadow-lg p-3 mb-5 bg-white rounded" style="width: 500px; margin:auto; margin-top: 60px;" id="start-page" @click="resetError">
+    <h1 id="editHead">Edit Task</h1>
+    <p id="errorMsg" v-bind:style="{ color: colorFont}">Unauthorized Access</p>
+    <p><b>Task Description</b></p>
     <p>{{editData.title}}</p>
     <div>
-      <button class="btn btn-outline-warning btn-sm" v-if="editData.category !== 'backlog'">{{buttonL}}</button>
-      <button class="btn btn-outline-danger btn-sm">Delete</button>
-      <button class="btn btn-outline-success btn-sm" v-if="editData.category !== 'done'">{{buttonR}}</button>
+      <button class="btn btn-outline-warning btn-sm" v-if="editData.category !== 'backlog'" @click="changeStatus('L')">{{buttonL}}</button>
+      <button class="btn btn-outline-danger btn-sm" @click="deleteTask(editData.id)">Delete</button>
+      <button class="btn btn-outline-success btn-sm" v-if="editData.category !== 'done'" @click="changeStatus('R')">{{buttonR}}</button>
     </div>
   </div>
 </template>
@@ -19,30 +21,63 @@ export default {
     data(){
       return {
         buttonR: '',
-        buttonL: ''
+        buttonL: '',
+        statusEdit: '',
+        colorFont: 'transparent'
       }
     },
     methods:{
-
-        edit(){
-
-            this.currentPage = 'edit'
-            const id = localStorage.getItem('taskId')
+        changeStatus(cond){
+          if (cond === 'R'){
+            this.statusEdit = this.buttonR
+            this.edit(this.editData.id)
+          }else {
+            this.statusEdit = this.buttonL
+            this.edit(this.editData.id)
+          }          
+        },
+        
+        edit(id){
             axios ({
-            url: `http://localhost:3000/tasks/${id}`,
-            method: 'get',
-            headers: {
+              url: `http://localhost:3000/tasks/${id}`,
+              method: 'put',
+              data: {
+                category: this.statusEdit.toLowerCase()
+              },
+              headers: {
                 access_token: localStorage.getItem('access_token')
-            }
+              }
             })
             .then(response => {
-            console.log(response.task)
-            this.editTask = response
-            currentStatus = response.status
+              this.$emit('editSuccess', 'home')
+              localStorage.removeItem('edit')
             })
             .catch(err => {
-            console.log(err)
+              this.colorFont = 'red'
+              console.log(err)
             })
+        },
+    
+        deleteTask(id){
+          axios ({
+            url: `http://localhost:3000/tasks/${id}`,
+            method: 'delete',
+            headers: {
+              access_token: localStorage.getItem('access_token')
+            }
+          })
+          .then(response => {
+            this.$emit('editSuccess', 'home')
+          })
+          .catch(err => {
+            console.log(err)
+            this.colorFont = 'red'
+
+          })
+        },
+
+        resetError(){
+          this.colorFont = 'transparent'
         }
     },
     created (){
@@ -61,6 +96,17 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
+  #editHead{
+    text-align: center;
+    margin-bottom: 10px;
+  }
 
+  #errorMsg{
+    text-align: center;
+    font-style: italic;
+    color: transparent;
+    transition: 1s;
+    color:transparent
+  }
 </style>
