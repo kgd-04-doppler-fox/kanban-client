@@ -1,0 +1,106 @@
+/* body {
+    margin: 0 ;
+    padding: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.layout {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-gap: 10px;
+}
+
+.layout_list {
+    background-color: lightgray;
+}
+
+.list_card {
+    background-color: ghostwhite;
+    background-color: blue;
+}
+ */
+
+ * {
+     padding: 0;
+     margin: 0;
+ }
+
+ /* flexBoxStyle */
+
+ .container-flex-navbar {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+ }
+
+ .container-flex { 
+    margin: 10px;
+    background-color: lightyellow;
+    min-height: 100px;
+    display: flex;
+    /* kalau mau make flex, mesti nulis display flex: ; */
+    flex-direction: row;
+    /* flex direction ---> kalau row, jadi kesamping, kalau column jadi kebawah, kalau row-reverse, jadi dikanan semua gitu  */
+    justify-content: space-around;
+    align-items: center;
+ } 
+
+ body {
+    margin: 0;
+    padding: 0;
+    background-color:lightsteelblue;
+    height: 100vh;
+  }
+  #login-section .container #login-row #login-column #login-box {
+    margin-top: 20px;
+    max-width: 600px;
+    height: 320px;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+  }
+
+  #register .container #register-row #register-column #register-box {
+    margin-top: 20px;
+    max-width: 600px;
+    height: 320px;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+  }
+
+  #addNewTask .container #addNew-row #addNew-column #addNew-box {
+    margin-top: 20px;
+    max-width: 600px;
+    height: 320px;
+    border: 1px solid #9C9C9C;
+    background-color: #EAEAEA;
+  }
+
+  #login .container #login-row #login-column #login-box #login-form {
+    padding: 20px;
+  }
+  #login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: -50px;
+  }
+
+  #register .container #register-row #register-column #register-box #register-form {
+    padding: 20px;
+  }
+  #register .container #register-row #register-column #register-box #register-form #register-link {
+    margin-top: -50px;
+  }
+
+  #addNewTask .container #addNew-row #addNew-column #addNew-box #addNew-form {
+    padding: 20px;
+  }
+  #addNewTask .container #addNew-row #addNew-column #addNew-box #addNew-form #addNew-link {
+    margin-top: -50px;
+  }
+
+
+
+
+
+

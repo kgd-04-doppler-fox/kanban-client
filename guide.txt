@@ -1,0 +1,44 @@
+`1. include cdn vue di html => <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+2. Membuat instance vue dan membuat dom tempat vue tersebut dirender
+3. Data binding, conditional, looping, event
+
+
+====Direktive untuk data binding====
+1. v-text
+2. v-html
+3.v-bind , attribut html v-bind:src, style v-bind:style, shorthand=> :
+4. v-model=> two way binding, ketika ada perubahan di dom , maka data di vue app juga berubah
+
+====Direktive untuk conditional====
+1. v-if
+2. v-else
+3. v-else-if
+4. v-show
+
+====Direktive untuk looping====
+v-for
+
+====Direktive untuk Event====
+v-on: short handnya @ => @click, @submit, 
+untuk form submit , atau hyperlink (a href ), jangan lupa di prevent @click.prevent/@submit.prevent
+
+
+Notes
+- methods, karna bisa banyak method
+- manggil data lain atau method lain di script pakai this
+- pakai axios jangan lupa include cdn axios juga => <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+- setiap data yang dipanggil di direktive wajib di define di data, kalau ngga akan error undefined
+- sama halnya untuk method, kalau ga didefine akan error
+
+
+setelah dom kerender, mounted
+beforecreate --> sebelum instance vue nya ke render
+created ---> setelah instance vue nya kerender
+fetch data di created
+
+before mounted ---  dom belom selesai kerender
+manipulasi dom, tempatnya di mounted aja
+
+computed ngolah data, penambahan Rp, Mr,  -->
+
+mengolah data tidak make model, makenya computed
