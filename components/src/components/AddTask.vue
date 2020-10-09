@@ -25,7 +25,7 @@
         </div>
         <div class="modal-body">
           <div class="container">
-            <form id="createForm" @submit.prevent="create">
+            <form id="createForm" @submit.prevent="signup">
               <div class="form-group">
                 <label class="text-body">Title:</label>
                 <input

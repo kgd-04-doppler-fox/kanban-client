@@ -11876,7 +11876,7 @@ exports.default = _default;
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.create($event)
+                      return _vm.signup($event)
                     }
                   }
                 },
@@ -12212,6 +12212,24 @@ var _default = {
       }).catch(function (err) {
         console.log(err);
       });
+    },
+    changeStatus: function changeStatus(id, statusId) {
+      var _this2 = this;
+
+      (0, _axios.default)({
+        method: "PATCH",
+        url: "".concat(baseUrl, "/tasks/").concat(id),
+        data: {
+          status: statusId
+        },
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      }).then(function (_) {
+        _this2.$emit("fetchData");
+      }).catch(function (err) {
+        console.log(err);
+      });
     }
   }
 };
@@ -12235,12 +12253,38 @@ exports.default = _default;
     _vm._v(" "),
     _c("p", [_vm._v(_vm._s(_vm.card.description))]),
     _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.card.id))]),
+    _c("p", [_vm._v(_vm._s(_vm.card))]),
     _vm._v(" "),
     _c("div", { staticClass: "flex-button" }, [
-      _c("button", { staticClass: "btn-warning" }, [_vm._v("Back")]),
+      _vm.card.status > 1
+        ? _c(
+            "button",
+            {
+              staticClass: "btn-warning",
+              on: {
+                click: function($event) {
+                  return _vm.changeStatus(_vm.card.id, _vm.card.status - 1)
+                }
+              }
+            },
+            [_vm._v("Back")]
+          )
+        : _vm._e(),
       _vm._v(" "),
-      _c("button", { staticClass: "btn-success" }, [_vm._v("Next")]),
+      _vm.card.status <= 3
+        ? _c(
+            "button",
+            {
+              staticClass: "btn-success",
+              on: {
+                click: function($event) {
+                  return _vm.changeStatus(_vm.card.id, _vm.card.status + 1)
+                }
+              }
+            },
+            [_vm._v("Next")]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "button",
@@ -12298,8 +12342,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _axios = _interopRequireDefault(require("axios"));
-
 var _KanbanCard = _interopRequireDefault(require("./KanbanCard"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -12326,10 +12368,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-var baseUrl = 'http://localhost:3000';
 var _default = {
   name: 'KanbanApp',
-  props: ["card"],
+  props: ["card", "status"],
   components: {
     KanbanCard: _KanbanCard.default
   },
@@ -12343,8 +12384,14 @@ var _default = {
       this.$emit("fetchData");
     }
   },
-  created: function created() {
-    this.fetchData();
+  computed: {
+    filterTask: function filterTask() {
+      var _this = this;
+
+      return this.card.filter(function (task) {
+        return task.status == _this.status.id;
+      });
+    }
   }
 };
 exports.default = _default;
@@ -12369,20 +12416,20 @@ exports.default = _default;
           staticStyle: { "max-width": "20rem" }
         },
         [
-          _vm._m(0),
+          _c("div", { class: _vm.status.color }, [
+            _c("h1", { staticClass: "text-center white" }, [
+              _vm._v(_vm._s(_vm.status.name))
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "div",
-            _vm._l(_vm.tasks, function(task) {
-              return _c(
-                "KanbanCard",
-                {
-                  key: task.id,
-                  attrs: { card: task },
-                  on: { fetchData: _vm.fetchData }
-                },
-                [_vm._v(" //bug\n              ")]
-              )
+            _vm._l(_vm.filterTask, function(task) {
+              return _c("KanbanCard", {
+                key: task.id,
+                attrs: { card: task },
+                on: { card: _vm.fetchData }
+              })
             }),
             1
           )
@@ -12391,16 +12438,7 @@ exports.default = _default;
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header m-3 bg-danger" }, [
-      _c("h1", { staticClass: "text-center white" }, [_vm._v("Backlog")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
           return {
@@ -12433,7 +12471,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","./KanbanCard":"src/components/KanbanCard.vue","_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
+},{"./KanbanCard":"src/components/KanbanCard.vue","_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12453,6 +12491,8 @@ var _AddTask = _interopRequireDefault(require("./components/AddTask"));
 
 var _KanbanApp = _interopRequireDefault(require("./components/KanbanApp"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //
@@ -12468,31 +12508,41 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+var baseUrl = "http://localhost:3000";
 var _default = {
-  name: 'App',
+  name: "App",
   data: function data() {
     return {
-      currentPage: 'login',
+      currentPage: "login",
       user: {
         email: "",
         password: ""
       },
+      tasks: [],
       status: [{
-        id: 0,
-        name: "BackLog",
-        color: "col col-xl-2 border border-secondary m-2 p-3"
-      }, {
         id: 1,
-        name: "To-Do",
-        color: "col col-xl-2 border border-warning m-2 p-3"
+        name: "BackLog",
+        color: "col border border-secondary bg-secondary"
       }, {
         id: 2,
-        name: "Doing",
-        color: "col col-xl-2 border border-danger m-2 p-3"
+        name: "To-Do",
+        color: "col border border-warning bg-warning"
       }, {
         id: 3,
+        name: "Doing",
+        color: "col border border-info bg-info"
+      }, {
+        id: 4,
         name: "Completed",
-        color: "col col-xl-2 border border-success m-2 p-3"
+        color: "col border border-success bg-success"
       }]
     };
   },
@@ -12503,16 +12553,16 @@ var _default = {
     fetchData: function fetchData() {
       var _this = this;
 
-      axios({
-        method: 'GET',
+      (0, _axios.default)({
+        method: "GET",
         url: "".concat(baseUrl, "/tasks"),
         headers: {
-          access_token: localStorage.getItem('access_token')
+          access_token: localStorage.getItem("access_token")
         }
       }).then(function (_ref) {
         var data = _ref.data;
-        console.log(data);
         _this.tasks = data.task;
+        console.log(_this.tasks);
       }).catch(function (err) {
         console.log(err);
       });
@@ -12527,9 +12577,10 @@ var _default = {
     KanbanApp: _KanbanApp.default
   },
   created: function created() {
-    if (localStorage.getItem('access_token')) {
-      this.changePage('mainPage');
-    } else this.changePage('login');
+    if (localStorage.getItem("access_token")) {
+      this.changePage("mainPage");
+      this.fetchData();
+    } else this.changePage("login");
   }
 };
 exports.default = _default;
@@ -12563,7 +12614,18 @@ exports.default = _default;
       _vm.currentPage === "login"
         ? _c("Home")
         : _vm.currentPage === "mainPage"
-        ? _c("KanbanApp", { on: { fetchData: _vm.fetchData } })
+        ? _c(
+            "div",
+            _vm._l(_vm.status, function(status) {
+              return _c("KanbanApp", {
+                key: status.id,
+                staticClass: "flex row",
+                attrs: { status: status, card: _vm.tasks },
+                on: { card: _vm.fetchData }
+              })
+            }),
+            1
+          )
         : _vm._e()
     ],
     1
@@ -12602,7 +12664,7 @@ render._withStripped = true
       
       }
     })();
-},{"./components/Home":"src/components/Home.vue","./components/Navbar":"src/components/Navbar.vue","./components/Signin":"src/components/Signin.vue","./components/Signup":"src/components/Signup.vue","./components/AddTask":"src/components/AddTask.vue","./components/KanbanApp":"src/components/KanbanApp.vue","_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/main.js":[function(require,module,exports) {
+},{"./components/Home":"src/components/Home.vue","./components/Navbar":"src/components/Navbar.vue","./components/Signin":"src/components/Signin.vue","./components/Signup":"src/components/Signup.vue","./components/AddTask":"src/components/AddTask.vue","./components/KanbanApp":"src/components/KanbanApp.vue","axios":"node_modules/axios/index.js","_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/main.js":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
@@ -12644,7 +12706,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39119" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46785" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
