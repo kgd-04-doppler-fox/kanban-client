@@ -1,0 +1,144 @@
+/* Body */
+.body {
+    margin: 0px;
+    position: relative;
+    height: 635px;
+    background-image: url('/pexels-jess-bailey-designs-743986.ecaef7a3.jpg');
+}
+
+/* Login & Register */
+
+.login-form {
+    border: 2px solid rgb(220, 220, 252);
+    border-radius: 10px;
+    height: 350px;
+    width: 550px;
+    position: relative;
+    left: 370px;
+    top: 100px;
+    background-color: rgb(230, 249, 255);
+    opacity: 0.8;
+    box-shadow: -10px -10px rgb(169, 235, 252);
+}
+
+.input {
+    position: relative;
+    top: 40px;
+    left: 75px;
+    height: 40px;
+    width: 386px;
+    font-size: 25px;
+    border: solid 1px blue;
+}
+.label {
+    position: relative;
+    top: 40px;
+    left: 75px;
+    font-size: 25px;
+}
+.button {
+    position: relative;
+    top: 70px;
+    left: 75px;
+    height: 40px;
+    width: 150px;
+    font-size: 25px;
+    background-color: rgb(114, 244, 253);
+    border: solid 1px blue;
+}
+.button2 {
+    position: relative;
+    top: 70px;
+    left: 160px;
+    height: 40px;
+    width: 150px;
+    font-size: 25px;
+    background-color: rgb(114, 244, 253);
+    border: solid 1px blue;
+}
+.to-register{
+    position: relative;
+    top:90px;
+    left: 75px;
+    font-size: 19px;
+}
+
+/* Home Page */
+
+.navbar {
+    height: 50px;
+    background-color: rgb(114, 244, 253);
+}
+h2 {
+    margin: 0px;
+    top: 10px;
+    left: 50px;
+    position: relative;
+    display: inline-block;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.logout {
+    position: relative;
+    top: 10px;
+    left: 970px;
+    height: 30px;
+    width: 100px;
+    font-size: 15px;
+    background-color: rgb(114, 244, 253);
+    border: outset 1px blue;
+}
+.new-task {
+    position: relative;
+    top: 55px;
+    left: 150px;
+    height: 30px;
+    width: 100px;
+    font-size: 15px;
+    background-color: rgb(114, 244, 253);
+    border: outset 1px blue;
+}
+.content {
+    display: flex;
+    position: relative;
+    top: 100px;
+}
+table {
+    border-collapse: collapse;
+    width: 15%;
+    position: relative;
+    left: 100px;
+    margin-left: 50px;
+}
+table, td {
+    border: 2px solid rgb(24, 116, 122);
+    text-align: center;
+}
+.th1 {
+    border: 2px solid  rgb(24, 116, 122);
+    height: 50px;
+    background-color: rgb(253, 114, 218);
+    text-align: center;
+}
+.th2 {
+    border: 2px solid  rgb(24, 116, 122);
+    height: 50px;
+    background-color: rgb(253, 204, 98);
+    text-align: center;
+}
+.th3 {
+    border: 2px solid  rgb(24, 116, 122);
+    height: 50px;
+    background-color: rgb(100, 253, 86);
+    text-align: center;
+}
+.th4 {
+    border: 2px solid  rgb(24, 116, 122);
+    height: 50px;
+    background-color: rgb(158, 101, 250);
+    text-align: center;
+}
+.button3 {
+    background-color: rgba(101, 245, 255, 0.767);
+}
+
+/*# sourceMappingURL=/style.e17aa3e4.css.map */
