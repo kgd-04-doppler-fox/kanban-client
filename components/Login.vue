@@ -18,12 +18,12 @@
 import axios from 'axios'
 
 export default {
-    name: `login`,
+    name: `Login`,
     data(){
         return {
             email_login: '',
             password_login: '',
-            errorLogin: 'transparent'
+            errorLogin: 'transparent',
         }
     },
     methods: {
@@ -39,6 +39,7 @@ export default {
             .then(response => {
                 localStorage.setItem('access_token', response.data.access_token)
                 this.$emit ('changePage', 'homePage')
+                this.$emit ('fetchRead', 'read')
             })
             .catch(err => {
                 this.errorLogin = 'red'

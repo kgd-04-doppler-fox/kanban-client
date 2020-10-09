@@ -19,7 +19,7 @@
 <script>
 import axios from 'axios'
 export default {
-    name: 'register',
+    name: 'Register',
     data(){
         return {
             first_name : '',

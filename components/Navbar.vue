@@ -10,9 +10,6 @@
 export default {
     name: 'Navbar',
     props: ['page'],
-    data (){
-        
-    },
     methods:{
         logout(){
             localStorage.clear()

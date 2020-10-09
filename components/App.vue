@@ -1,47 +1,79 @@
 <template>
   <div>
-      <Navbar :page="currentPage" @logout="login" @signin="login"></Navbar>
-      <login v-if="currentPage === 'login'" @changePage="changePage" @registrationPage="register"></login>
-      <register v-if="currentPage === 'register'"></register>
-      <home v-if="currentPage === 'home'"></home>
-
+      <Navbar :page="currentPage" @logout="changePage('login')" @signin="changePage('login')"></Navbar>
+      <Login v-if="currentPage === 'login'" @changePage="changePage('home')" @registrationPage="changePage('register')" @fetchRead="fetchTask()"></Login>
+      <Register v-if="currentPage === 'register'"></Register>
+      <h1 v-if="currentPage === 'home'" id="home_title">Task Lists</h1>
+      <Board v-if="currentPage === 'home'" :tasks="tasks" id="board"></Board>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import Navbar from './Navbar'
-import login from './Login'
-import register from './Register'
-import home from './Home'
+import Login from './Login'
+import Register from './Register'
+import Board from './Board'
 
 export default {
     data (){
         return {
             currentPage: 'login',
+            tasks: [],
         }
     },
     components : {
         Navbar,
-        login,
-        register,
-        home,
+        Login,
+        Register,
+        Board
     },
     methods : {
-        changePage(){
-            this.currentPage = 'home'
+        changePage(page){
+            this.currentPage = page
         },
 
-        register(){
-            this.currentPage = 'register'
-        },
-
-        login(){
-            this.currentPage = 'login'
+        fetchTask(){
+            axios({
+                url: `http://localhost:3000/tasks`,
+                method: `get`,
+                headers: {
+                    access_token : localStorage.getItem('access_token')
+                }
+            })
+            .then(response => {
+                this.tasks = response.data
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+    },
+    created(){
+        if(localStorage.getItem('access_token')){
+            this.changePage('home')
+            this.fetchTask()
+        }
+        else {
+            this.changePage('login')
         }
     }
 }
 </script>
 
-<style>
+<style scope>
+    #board{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    
 
+  }
+
+  #home_title{
+      text-align: center;
+      margin-top: 30px;
+      font-family: 'Poppins', sans-serif;
+  }
 </style>
