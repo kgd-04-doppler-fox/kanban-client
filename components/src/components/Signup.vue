@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <button type="button" ref="myBtn" class="btn btn-secondary" data-dismiss="modal">
             Close
           </button>
         </div>
@@ -75,7 +75,7 @@
 
 <script>
 import axios from "axios";
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 
 export default {
   name: "Signup",
@@ -89,6 +89,10 @@ export default {
     };
   },
   methods: {
+    autoClose($event) {
+      const elem = this.$refs.myBtn;
+      elem.click();
+    },
     signup() {
       axios({
         method: "POST",
@@ -100,6 +104,7 @@ export default {
         },
       })
         .then((response) => {
+          this.autoClose()
           console.log(response);
         })
         .catch((err) => {

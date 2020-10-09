@@ -49,7 +49,12 @@
                   />
                 </div>
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Submit
+                  </button>
                 </div>
               </form>
               <div class="text-center m-2">
@@ -70,6 +75,7 @@
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
+              ref="myBtn"
             >
               Close
             </button>
@@ -82,7 +88,7 @@
 
 <script>
 import axios from "axios";
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 
 export default {
   name: "Signin",
@@ -95,6 +101,10 @@ export default {
     };
   },
   methods: {
+    autoClose($event) {
+      const elem = this.$refs.myBtn;
+      elem.click();
+    },
     signin() {
       axios({
         method: "POST",
@@ -106,7 +116,9 @@ export default {
       })
         .then((response) => {
           localStorage.setItem(`access_token`, response.data.access_token);
+          this.autoClose()
           this.$emit("page", "mainPage");
+          this.$emit("fetchData");
         })
         .catch((err) => {
           console.log(err.response);

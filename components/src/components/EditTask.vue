@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade"
-    id="addTaskModal"
+    id="updateTaskModal"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalLabel"
@@ -11,7 +11,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title text-body" id="exampleModalLabel">
-            Create Todo
+            Edit Task
           </h5>
           <button
             type="button"
@@ -73,7 +73,7 @@
                 />
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-primary" v-on:click="autoClose">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
           </div>
@@ -93,7 +93,7 @@ import axios from "axios";
 const baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 
 export default {
-  name: "AddTask",
+  name: "EditTask",
   data() {
     return {
       newTask: {
@@ -110,10 +110,10 @@ export default {
       const elem = this.$refs.myBtn;
       elem.click();
     },
-    signup() {
+    updateTask(id) {
       axios({
-        method: "POST",
-        url: `${baseUrl}/tasks`,
+        method: "PUT",
+        url: `${baseUrl}/tasks/${id}`,
         data: {
           title: this.newTask.title,
           description: this.newTask.description,
@@ -126,11 +126,6 @@ export default {
         },
       })
         .then((response) => {
-          this.newTask.title = "";
-          this.newTask.description = "";
-          this.newTask.category = "";
-          this.newTask.status = "";
-          this.newTask.due_date = "";
           this.autoClose()
           this.$emit("fetchData");
         })

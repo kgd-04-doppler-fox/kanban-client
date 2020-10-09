@@ -1,0 +1,48 @@
+body {
+    background-image: url("https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&w=1000&q=80");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+.row{
+    display: flex;
+    flex-flow: row wrap;
+
+/* perfect centering */
+    justify-content: center;
+    align-items: center;
+    
+    align-content: center;;
+}
+
+.border-black{
+    border:1px solid black;
+}
+
+.card:hover{
+    box-shadow: 10px 10px 5px grey;
+}
+
+/* Kanban Title */
+.white{
+    color: floralwhite;
+}
+/* Jumbotron home */
+.jumbotron{
+    position: center;
+    position: absolute;
+    left: 50%!important;
+    z-index: 10;
+    text-align: center;
+    top: 50%!important;
+    transform: translate(-50%, -50%);
+    width: fit-content;
+    padding: 50px
+}
+
+.flex-button{
+    align-items: center;
+    align-content: stretch;
+}

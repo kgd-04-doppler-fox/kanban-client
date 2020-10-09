@@ -11050,7 +11050,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-var baseUrl = "http://localhost:3000";
+//
+//
+//
+//
+//
+//
+var baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 var _default = {
   name: "Signin",
   data: function data() {
@@ -11062,6 +11068,10 @@ var _default = {
     };
   },
   methods: {
+    autoClose: function autoClose($event) {
+      var elem = this.$refs.myBtn;
+      elem.click();
+    },
     signin: function signin() {
       var _this = this;
 
@@ -11075,7 +11085,11 @@ var _default = {
       }).then(function (response) {
         localStorage.setItem("access_token", response.data.access_token);
 
+        _this.autoClose();
+
         _this.$emit("page", "mainPage");
+
+        _this.$emit("fetchData");
       }).catch(function (err) {
         console.log(err.response);
       });
@@ -11210,7 +11224,17 @@ exports.default = _default;
               ])
             ]),
             _vm._v(" "),
-            _vm._m(4)
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  ref: "myBtn",
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("\n            Close\n          ")]
+              )
+            ])
           ])
         ])
       ])
@@ -11252,7 +11276,7 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Submit")]
+        [_vm._v("\n                  Submit\n                ")]
       )
     ])
   },
@@ -11280,21 +11304,6 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("span", { staticClass: "buttonText" }, [_vm._v("Google")])
         ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("\n            Close\n          ")]
       )
     ])
   }
@@ -11418,7 +11427,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-var baseUrl = "http://localhost:3000";
+var baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 var _default = {
   name: "Signup",
   data: function data() {
@@ -11431,7 +11440,13 @@ var _default = {
     };
   },
   methods: {
+    autoClose: function autoClose($event) {
+      var elem = this.$refs.myBtn;
+      elem.click();
+    },
     signup: function signup() {
+      var _this = this;
+
       (0, _axios.default)({
         method: "POST",
         url: "".concat(baseUrl, "/users/register"),
@@ -11441,6 +11456,8 @@ var _default = {
           password: this.user.password
         }
       }).then(function (response) {
+        _this.autoClose();
+
         console.log(response);
       }).catch(function (err) {
         console.log(err.response);
@@ -11597,7 +11614,17 @@ exports.default = _default;
             ])
           ]),
           _vm._v(" "),
-          _vm._m(2)
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                ref: "myBtn",
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("\n          Close\n        ")]
+            )
+          ])
         ])
       ])
     ]
@@ -11639,21 +11666,6 @@ var staticRenderFns = [
         "button",
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Submit")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("\n          Close\n        ")]
       )
     ])
   }
@@ -11792,7 +11804,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-var baseUrl = "http://localhost:3000";
+var baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 var _default = {
   name: "AddTask",
   data: function data() {
@@ -11807,6 +11819,10 @@ var _default = {
     };
   },
   methods: {
+    autoClose: function autoClose($event) {
+      var elem = this.$refs.myBtn;
+      elem.click();
+    },
     signup: function signup() {
       var _this = this;
 
@@ -11829,6 +11845,8 @@ var _default = {
         _this.newTask.category = "";
         _this.newTask.status = "";
         _this.newTask.due_date = "";
+
+        _this.autoClose();
 
         _this.$emit("fetchData");
       }).catch(function (err) {
@@ -12065,13 +12083,33 @@ exports.default = _default;
                     })
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _c("div", { staticClass: "text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit" },
+                        on: { click: _vm.autoClose }
+                      },
+                      [_vm._v("Submit")]
+                    )
+                  ])
                 ]
               )
             ])
           ]),
           _vm._v(" "),
-          _vm._m(2)
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                ref: "myBtn",
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("\n          Close\n        ")]
+            )
+          ])
         ])
       ])
     ]
@@ -12104,33 +12142,6 @@ var staticRenderFns = [
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Submit")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("\n          Close\n        ")]
       )
     ])
   }
@@ -12167,6 +12178,478 @@ render._withStripped = true
       
       }
     })();
+},{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/EditTask.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var baseUrl = "https://shrouded-falls-16636.herokuapp.com";
+var _default = {
+  name: "EditTask",
+  data: function data() {
+    return {
+      newTask: {
+        title: "",
+        description: "",
+        category: "",
+        status: "",
+        due_date: ""
+      }
+    };
+  },
+  methods: {
+    autoClose: function autoClose($event) {
+      var elem = this.$refs.myBtn;
+      elem.click();
+    },
+    updateTask: function updateTask(id) {
+      var _this = this;
+
+      (0, _axios.default)({
+        method: "PUT",
+        url: "".concat(baseUrl, "/tasks/").concat(id),
+        data: {
+          title: this.newTask.title,
+          description: this.newTask.description,
+          category: this.newTask.category,
+          status: this.newTask.status,
+          due_date: this.newTask.due_date
+        },
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      }).then(function (response) {
+        _this.autoClose();
+
+        _this.$emit("fetchData");
+      }).catch(function (err) {
+        console.log(err.response);
+      });
+    }
+  }
+};
+exports.default = _default;
+        var $53f547 = exports.default || module.exports;
+      
+      if (typeof $53f547 === 'function') {
+        $53f547 = $53f547.options;
+      }
+    
+        /* template */
+        Object.assign($53f547, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "updateTaskModal",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "container" }, [
+              _c(
+                "form",
+                {
+                  attrs: { id: "createForm" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.signup($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "text-body" }, [
+                      _vm._v("Title:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newTask.title,
+                          expression: "newTask.title"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Ex: Migration Database"
+                      },
+                      domProps: { value: _vm.newTask.title },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.newTask, "title", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "text-body" }, [
+                      _vm._v("Description:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newTask.description,
+                          expression: "newTask.description"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Ex: Ruri, Finish Prototype UI"
+                      },
+                      domProps: { value: _vm.newTask.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newTask,
+                            "description",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "text-body" }, [
+                      _vm._v("Category:")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newTask.category,
+                          expression: "newTask.category"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "FrontEnd, BackEnd, DevOps"
+                      },
+                      domProps: { value: _vm.newTask.category },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.newTask, "category", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "text-body" }, [
+                      _vm._v("Status:")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newTask.status,
+                            expression: "newTask.status"
+                          }
+                        ],
+                        staticClass: "custom-select",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.newTask,
+                              "status",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "1" } }, [
+                          _vm._v("Backlog")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "2" } }, [
+                          _vm._v("Todo")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "3" } }, [
+                          _vm._v("Doing")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "4" } }, [
+                          _vm._v("Done")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("div", { attrs: { id: "alertDate" } }),
+                    _vm._v(" "),
+                    _c("label", { staticClass: "text-body" }, [
+                      _vm._v("Due Date:")
+                    ]),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newTask.due_date,
+                          expression: "newTask.due_date"
+                        }
+                      ],
+                      attrs: { type: "date", min: "new Date().getUTCDate()" },
+                      domProps: { value: _vm.newTask.due_date },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.newTask, "due_date", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                ref: "myBtn",
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("\n          Close\n        ")]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        {
+          staticClass: "modal-title text-body",
+          attrs: { id: "exampleModalLabel" }
+        },
+        [_vm._v("\n          Edit Task\n        ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            id: "closeCreate",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Submit")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$53f547', $53f547);
+          } else {
+            api.reload('$53f547', $53f547);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
 },{"axios":"node_modules/axios/index.js","_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/KanbanCard.vue":[function(require,module,exports) {
 "use strict";
 
@@ -12193,7 +12676,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-var baseUrl = "http://localhost:3000";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 var _default = {
   name: "KanbanCard",
   props: ["card"],
@@ -12201,17 +12706,21 @@ var _default = {
     deleteCard: function deleteCard(id) {
       var _this = this;
 
-      (0, _axios.default)({
-        method: "DELETE",
-        url: "".concat(baseUrl, "/tasks/").concat(id),
-        headers: {
-          access_token: localStorage.getItem("access_token")
-        }
-      }).then(function (_) {
-        _this.$emit("fetchData");
-      }).catch(function (err) {
-        console.log(err);
-      });
+      var reConfirm = confirm("You sure want to destroy it ?");
+
+      if (reConfirm) {
+        (0, _axios.default)({
+          method: "DELETE",
+          url: "".concat(baseUrl, "/tasks/").concat(id),
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        }).then(function (_) {
+          _this.$emit("fetchData");
+        }).catch(function (err) {
+          console.log(err);
+        });
+      }
     },
     changeStatus: function changeStatus(id, statusId) {
       var _this2 = this;
@@ -12230,6 +12739,11 @@ var _default = {
       }).catch(function (err) {
         console.log(err);
       });
+    },
+    computed: {
+      convertDate: function convertDate() {
+        return moment(this.card.due_date).format("YYYY-MM-DD");
+      }
     }
   }
 };
@@ -12247,27 +12761,40 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card border-black" }, [
-    _c("p", [_vm._v(_vm._s(_vm.card.title))]),
+    _c("p", [_vm._v("Title :" + _vm._s(_vm.card.title))]),
     _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.card.category))]),
+    _c("p", [_vm._v("Category :" + _vm._s(_vm.card.category))]),
     _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.card.description))]),
+    _c("p", [_vm._v("Description : " + _vm._s(_vm.card.description))]),
     _vm._v(" "),
-    _c("p", [_vm._v(_vm._s(_vm.card))]),
+    _c("p", [_vm._v("Due Date: " + _vm._s(_vm.card.due_date))]),
     _vm._v(" "),
     _c("div", { staticClass: "flex-button" }, [
+      _c(
+        "button",
+        {
+          staticClass: "flex btn-info",
+          attrs: {
+            href: "#",
+            "data-toggle": "modal",
+            "data-target": "#updateTaskModal"
+          }
+        },
+        [_vm._v("\n      Update\n    ")]
+      ),
+      _vm._v(" "),
       _vm.card.status > 1
         ? _c(
             "button",
             {
-              staticClass: "btn-warning",
+              staticClass: "flex btn-warning",
               on: {
                 click: function($event) {
                   return _vm.changeStatus(_vm.card.id, _vm.card.status - 1)
                 }
               }
             },
-            [_vm._v("Back")]
+            [_vm._v("\n      Back\n    ")]
           )
         : _vm._e(),
       _vm._v(" "),
@@ -12275,28 +12802,28 @@ exports.default = _default;
         ? _c(
             "button",
             {
-              staticClass: "btn-success",
+              staticClass: "flex btn-success",
               on: {
                 click: function($event) {
                   return _vm.changeStatus(_vm.card.id, _vm.card.status + 1)
                 }
               }
             },
-            [_vm._v("Next")]
+            [_vm._v("\n      Next\n    ")]
           )
         : _vm._e(),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "btn-danger",
+          staticClass: "flex btn-danger",
           on: {
             click: function($event) {
               return _vm.deleteCard(_vm.card.id)
             }
           }
         },
-        [_vm._v("Delete")]
+        [_vm._v("\n      Delete\n    ")]
       )
     ])
   ])
@@ -12364,12 +12891,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
 var _default = {
-  name: 'KanbanApp',
+  name: "KanbanApp",
   props: ["card", "status"],
   components: {
     KanbanCard: _KanbanCard.default
@@ -12407,36 +12930,30 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("section", { staticClass: "container" }, [
-    _c("div", { staticClass: "flex-container" }, [
+  return _c(
+    "div",
+    { staticClass: "card col-2 p-3", staticStyle: { "max-width": "25rem" } },
+    [
+      _c("div", { class: _vm.status.color }, [
+        _c("h1", { staticClass: "text-center white" }, [
+          _vm._v(_vm._s(_vm.status.name))
+        ])
+      ]),
+      _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "card col-3 p-3",
-          staticStyle: { "max-width": "20rem" }
-        },
-        [
-          _c("div", { class: _vm.status.color }, [
-            _c("h1", { staticClass: "text-center white" }, [
-              _vm._v(_vm._s(_vm.status.name))
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            _vm._l(_vm.filterTask, function(task) {
-              return _c("KanbanCard", {
-                key: task.id,
-                attrs: { card: task },
-                on: { card: _vm.fetchData }
-              })
-            }),
-            1
-          )
-        ]
+        _vm._l(_vm.filterTask, function(task) {
+          return _c("KanbanCard", {
+            key: task.id,
+            staticClass: "d-inline-flex p-2 bd-highlight",
+            attrs: { card: task },
+            on: { fetchData: _vm.fetchData }
+          })
+        }),
+        1
       )
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -12489,6 +13006,8 @@ var _Signup = _interopRequireDefault(require("./components/Signup"));
 
 var _AddTask = _interopRequireDefault(require("./components/AddTask"));
 
+var _EditTask = _interopRequireDefault(require("./components/EditTask"));
+
 var _KanbanApp = _interopRequireDefault(require("./components/KanbanApp"));
 
 var _axios = _interopRequireDefault(require("axios"));
@@ -12515,8 +13034,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-var baseUrl = "http://localhost:3000";
+var baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 var _default = {
   name: "App",
   data: function data() {
@@ -12574,13 +13092,18 @@ var _default = {
     Signin: _Signin.default,
     Signup: _Signup.default,
     AddTask: _AddTask.default,
+    EditTask: _EditTask.default,
     KanbanApp: _KanbanApp.default
   },
   created: function created() {
     if (localStorage.getItem("access_token")) {
       this.changePage("mainPage");
       this.fetchData();
-    } else this.changePage("login");
+    } else {
+      this.changePage("login");
+    }
+
+    ;
   }
 };
 exports.default = _default;
@@ -12600,7 +13123,7 @@ exports.default = _default;
     "div",
     { attrs: { id: "app" } },
     [
-      _c("Signin", { on: { page: _vm.changePage } }),
+      _c("Signin", { on: { page: _vm.changePage, fetchData: _vm.fetchData } }),
       _vm._v(" "),
       _c("Signup"),
       _vm._v(" "),
@@ -12611,17 +13134,19 @@ exports.default = _default;
       _vm._v(" "),
       _c("AddTask", { on: { fetchData: _vm.fetchData } }),
       _vm._v(" "),
+      _c("EditTask", { on: { fetchData: _vm.fetchData } }),
+      _vm._v(" "),
       _vm.currentPage === "login"
         ? _c("Home")
         : _vm.currentPage === "mainPage"
         ? _c(
             "div",
+            { staticClass: "row" },
             _vm._l(_vm.status, function(status) {
               return _c("KanbanApp", {
                 key: status.id,
-                staticClass: "flex row",
                 attrs: { status: status, card: _vm.tasks },
-                on: { card: _vm.fetchData }
+                on: { fetchData: _vm.fetchData }
               })
             }),
             1
@@ -12664,7 +13189,7 @@ render._withStripped = true
       
       }
     })();
-},{"./components/Home":"src/components/Home.vue","./components/Navbar":"src/components/Navbar.vue","./components/Signin":"src/components/Signin.vue","./components/Signup":"src/components/Signup.vue","./components/AddTask":"src/components/AddTask.vue","./components/KanbanApp":"src/components/KanbanApp.vue","axios":"node_modules/axios/index.js","_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/main.js":[function(require,module,exports) {
+},{"./components/Home":"src/components/Home.vue","./components/Navbar":"src/components/Navbar.vue","./components/Signin":"src/components/Signin.vue","./components/Signup":"src/components/Signup.vue","./components/AddTask":"src/components/AddTask.vue","./components/EditTask":"src/components/EditTask.vue","./components/KanbanApp":"src/components/KanbanApp.vue","axios":"node_modules/axios/index.js","_css_loader":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/main.js":[function(require,module,exports) {
 "use strict";
 
 var _vue = _interopRequireDefault(require("vue"));
@@ -12706,7 +13231,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46785" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39531" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

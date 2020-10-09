@@ -1,19 +1,18 @@
 <template>
   <div id="app">
-    <Signin @page="changePage"></Signin>
+    <Signin @page="changePage" @fetchData="fetchData"></Signin>
     <Signup></Signup>
     <Navbar @logoutSuccess="changePage" :page="currentPage"></Navbar>
     <AddTask @fetchData="fetchData"></AddTask>
+    <EditTask @fetchData="fetchData"></EditTask>
     <Home v-if="currentPage === 'login'"></Home>
-    <div v-else-if="currentPage === 'mainPage'">
-
+    <div v-else-if="currentPage === 'mainPage'" class="row" >
     <KanbanApp
       v-for="status in status"
       :key="status.id"
       :status="status"
-      :card="tasks"
-      class="flex row" 
-      @card="fetchData"
+      :card="tasks" 
+      @fetchData="fetchData"
     ></KanbanApp>
     </div>
   </div>
@@ -25,9 +24,10 @@ import Navbar from "./components/Navbar";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import AddTask from "./components/AddTask";
+import EditTask from "./components/EditTask";
 import KanbanApp from "./components/KanbanApp";
 import axios from "axios";
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 
 export default {
   name: "App",
@@ -90,16 +90,65 @@ export default {
     Signin,
     Signup,
     AddTask,
+    EditTask,
     KanbanApp,
   },
   created() {
     if (localStorage.getItem("access_token")) {
       this.changePage("mainPage");
       this.fetchData();
-    } else this.changePage("login");
+    } else {this.changePage("login")};
   },
 };
 </script>
 
 <style>
+body {
+    background-image: url("https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&w=1000&q=80");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+.row{
+    display: flex;
+    flex-flow: row wrap;
+
+/* perfect centering */
+    justify-content: center;
+    align-items: center;
+    
+    align-content: center;;
+}
+
+.border-black{
+    border:1px solid black;
+}
+
+.card:hover{
+    box-shadow: 10px 10px 5px grey;
+}
+
+/* Kanban Title */
+.white{
+    color: floralwhite;
+}
+/* Jumbotron home */
+.jumbotron{
+    position: center;
+    position: absolute;
+    left: 50%!important;
+    z-index: 10;
+    text-align: center;
+    top: 50%!important;
+    transform: translate(-50%, -50%);
+    width: fit-content;
+    padding: 50px
+}
+
+.flex-button{
+    align-items: center;
+    align-content: stretch;
+}
 </style>
