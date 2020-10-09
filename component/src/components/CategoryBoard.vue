@@ -13,12 +13,12 @@
         <div class="card-body">
             <h5 class="card-title">{{task.title}}</h5>
             <p class="card-text">
-            <small class="text-muted">user@gmail.com</small> <br>
-            <small class="text-muted">created date</small>
+            <small class="text-muted">{{ task.UserId }}</small> <br>
+            <small class="text-muted">{{ task.createdAt }}</small>
             </p>
             <div class="options">
             <button class="btn"><i class="fas fa-pencil-alt"></i></button>
-            <button class="btn"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn" @click="deleteTask"><i class="fas fa-trash-alt"></i></button>
             <button class="btn"><i class="fas fa-expand-arrows-alt"></i></button>
             </div>
         </div>
@@ -29,7 +29,7 @@
     <!-- backlog footer -->
     <div class="card-board-footer rounded-bottom mb-3">
         <div class="add-task">
-        <button class="btn"><i class="fas fa-plus"></i> Add task</button>
+            <button class="btn"><i class="fas fa-plus"></i> Add task</button>
         </div>
     </div>
     <!-- backlog footer ends -->
@@ -38,6 +38,7 @@
 
 <script>
 // import TaskCard from './TaskCard'
+import axios from 'axios'
 
 export default {
     name: 'CategoryBoard',
@@ -46,6 +47,23 @@ export default {
     computed: {
         filterTask () {
             return this.tasks.filter(task => task.category === this.category)
+        }
+    },
+    methods: {
+        deleteTask () {
+            axios({
+                method: 'DELETE',
+                url: 'http://localhost:3000/tasks/' + this.tasks.id,
+                headers: {
+                    access_token: localStorage.getItem('access_token')
+                }
+            })
+            .then(({ data }) => {
+                this.$emit('tofetchTask')
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
     }
 }

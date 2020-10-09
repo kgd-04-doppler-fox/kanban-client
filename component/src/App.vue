@@ -24,7 +24,7 @@ export default {
     methods: {
         changePage (page) {
             this.currentPage = page
-        }
+        },
     },
     components: {
         Navbar,
