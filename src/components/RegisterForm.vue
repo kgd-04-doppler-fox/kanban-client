@@ -51,10 +51,6 @@
             Have an account?
             <a href="#login" id="login-from-form" @click="login">Log In</a>
           </p>
-
-          <p class="divider-text pt-1">
-            <span>OR</span>
-          </p>
         </div>
       </div>
     </div>

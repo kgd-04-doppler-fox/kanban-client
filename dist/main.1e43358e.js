@@ -11232,10 +11232,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
 var _default = {
   name: "RegisterForm",
   data: function data() {
@@ -11398,9 +11394,7 @@ exports.default = _default;
                 },
                 [_vm._v("Log In")]
               )
-            ]),
-            _vm._v(" "),
-            _vm._m(2)
+            ])
           ])
         ])
       ])
@@ -11426,14 +11420,6 @@ var staticRenderFns = [
       _c("span", { staticClass: "input-group-text" }, [
         _c("i", { staticClass: "fa fa-lock" })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "divider-text pt-1" }, [
-      _c("span", [_vm._v("OR")])
     ])
   }
 ]
