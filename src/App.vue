@@ -15,13 +15,12 @@
 
 <script>
 import axios from 'axios'
-import EditPage from './EditPage'
-import Navbar from './Navbar'
-import Login from './Login'
-import Register from './Register'
-import Board from './Board'
-import AddTask from './AddTask'
-import TaskCard from './TaskCard'
+import EditPage from './components/EditPage'
+import Navbar from './components/Navbar'
+import Login from './components/Login'
+import Register from './components/Register'
+import Board from './components/Board'
+import AddTask from './components/AddTask'
 
 export default {
     name: 'Gate',
@@ -38,7 +37,6 @@ export default {
         Register,
         Board,
         EditPage,
-        TaskCard,
         AddTask
     },
     methods : {
@@ -106,6 +104,4 @@ export default {
         font-family: 'Poppins', sans-serif;
 
     }
-
-    
 </style>
