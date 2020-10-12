@@ -89,7 +89,7 @@ export default {
   methods: {
     login() {
       axios({
-        url: "http://localhost:3000/login",
+        url: "https://warm-stream-58190.herokuapp.com/login",
         method: "POST",
         data: {
           email: this.user.email,
@@ -111,10 +111,9 @@ export default {
       this.$emit("switchPage", "register");
     },
     OnGoogleAuthSuccess(idToken) {
-      console.log(idToken);
       let id_token = idToken;
       axios({
-        url: `http://localhost:3000/googleSignIn`,
+        url: `https://warm-stream-58190.herokuapp.com/googleSignIn`,
         method: "POST",
         data: {
           access_token: id_token,

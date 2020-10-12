@@ -26,7 +26,6 @@
                 id="title-edit"
                 placeholder="Enter title"
                 v-model="selected.title"
-                value="task.title"
               />
             </div>
             <div class="form-group">
@@ -36,7 +35,6 @@
                 id="category-edit"
                 name="category"
                 v-model="selected.category"
-                value="task.category"
               >
                 <option disabled selected>-- Please select --</option>
                 <option value="backlog">Backlog</option>
@@ -53,7 +51,6 @@
                 id="description-edit"
                 rows="3"
                 placeholder="Enter description"
-                value="task.description"
               ></textarea>
             </div>
 
@@ -83,7 +80,7 @@ export default {
         category: "",
         description: "",
       },
-      formerData: localStorage.getItem("taskId"),
+      formerData: JSON.parse(localStorage.getItem("task")),
       display: "none",
     };
   },
@@ -91,12 +88,12 @@ export default {
     cancel() {
       this.$emit("switchPage", "main");
       this.$emit("refetch");
-      localStorage.removeItem("taskId");
+      localStorage.removeItem("task");
     },
     edit() {
       axios({
         method: "PUT",
-        url: `http://localhost:3000/tasks/${this.formerData}`,
+        url: `https://warm-stream-58190.herokuapp.com/tasks/${this.formerData}`,
         headers: {
           access_token: localStorage.getItem("access_token"),
         },

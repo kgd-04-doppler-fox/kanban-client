@@ -73,7 +73,7 @@ export default {
   methods: {
     register() {
       axios({
-        url: "http://localhost:3000/register",
+        url: "https://warm-stream-58190.herokuapp.com/googleSignIn",
         method: "POST",
         data: {
           email: this.user.email,

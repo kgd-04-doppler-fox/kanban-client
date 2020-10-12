@@ -34,12 +34,12 @@ export default {
     edit(task) {
       this.$emit("editTask", this.task);
       this.$emit("switchPage", "edit");
-      localStorage.setItem("taskId", this.task.id);
+      localStorage.setItem("task", JSON.stringify(this.task));
     },
     deleteTask() {
       axios({
         method: "DELETE",
-        url: `http://localhost:3000/tasks/${this.task.id}`,
+        url: `https://warm-stream-58190.herokuapp.com/tasks/${this.task.id}`,
         headers: {
           access_token: localStorage.getItem("access_token"),
         },
