@@ -1,0 +1,93 @@
+#editHead{
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#errorMsg{
+  text-align: center;
+  font-style: italic;
+  color: transparent;
+  transition: 1s;
+  color:transparent
+}
+#google_btn{
+    background: white;
+    width: 215px;
+    border-radius: 5px;
+    border: solid gainsboro 1px;
+    margin-bottom: 10px;
+    
+}
+
+img{
+    width: 30px;
+}
+#btn_edit[data-v-852a30]{
+  margin-left: 70%;
+}
+#title_head[data-v-852a30]{
+  background: linear-gradient(#90F7EC, #90F7EC, #32CCBC);
+  font-size: small;
+  font-family: 'Raleway', sans-serif
+}
+#headTask {
+    background: #FFC300;
+    padding: 7px;
+    width: auto;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    border-radius: 70px;
+}
+
+#taskBox {
+    border: solid #E6E6E6 1px;
+    margin-bottom: 10px;
+}
+
+#add{
+    display: flex;
+    float: right;
+}
+#boardTask{
+  width: 250px;
+  border: solid #E6E6E6 1px;
+}
+#createHead{
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+}
+
+#form-create {
+    width: 300px;
+    margin: auto;
+    margin-top:7%;
+}
+
+#btn_create{
+    margin: auto;
+}
+#board{
+display: flex;
+flex-flow: row wrap;
+justify-content: space-evenly;
+margin-top: 20px;
+}
+
+#addBtn{
+    margin-left: auto;
+}
+
+#home_title{
+  text-align: center;
+  margin-top: 30px;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+}
+
+#btn-Add {
+    margin-left: 86%;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+
+}
