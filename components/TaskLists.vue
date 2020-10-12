@@ -10,9 +10,6 @@
         id="taskBox"
         @editPage="editTask"
       ></TaskCard>
-      <div>
-          <button id="add" class="btn btn-outline-info btn-sm" @click="addTask">+ Add Task</button>
-      </div>
   </div>
 </template>
 

@@ -5,7 +5,8 @@
       <Register v-if="currentPage === 'register'"></Register>
 
       <h1 v-if="currentPage === 'home'" id="home_title">Task Lists</h1>
-      <Board v-if="currentPage === 'home'" :tasks="tasks" id="board" @editTask="editData" @addTask="changePage('create')"></Board>
+      <div><button @click="changePage('create')" class="btn btn-warning btn-sm" id="btn-Add" v-if="currentPage === 'home'">Add Task</button></div>
+      <Board v-if="currentPage === 'home'" :tasks="tasks" id="board" @editTask="editData"></Board>
       <AddTask id="create-page" v-if="currentPage === 'create'"  @addDone="changePage('home')" @fetchNewData="fetchTask" ></AddTask>
       <EditPage v-if="currentPage === 'edit'" :editData="editTask" @editSuccess="changePage('home')"></EditPage>
 
@@ -97,6 +98,13 @@ export default {
       margin-top: 30px;
       font-family: 'Poppins', sans-serif;
       color: white;
+    }
+
+    #btn-Add {
+        margin-left: 86%;
+        color: white;
+        font-family: 'Poppins', sans-serif;
+
     }
 
     

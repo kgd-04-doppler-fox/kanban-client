@@ -2,19 +2,22 @@
   <div id="card_task">
     <p id="title_head" class="card-header">{{tugas.title}}</p>
     <div class="card-body">
-        <a id="btn_edit" href="#" class="btn btn-primary btn-sm" @click="edit(tugas.id)">edit</a>
+        <a id="btn_edit" href="#" class="btn btn-primary btn-sm" @click="edit(tugas.id)" v-if="authorized">edit</a>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
+
 export default {    
     name: "CardTask",
     props: ['tugas'],
     data(){
       return {
-        creatorName: ''
+        creatorName: '',
+        authorized : false
       }
     },
     methods: {
@@ -22,6 +25,18 @@ export default {
         this.$emit('editPage', this.tugas)
       },
 
+    },
+    created(){
+      const token = localStorage.getItem('access_token')
+      const decoded = jwt.verify(token, 'secret')
+      if(decoded){
+        if(decoded.id === this.tugas.UserId){
+          this.authorized = true
+        }
+      }
+      else {
+        this.authorized = false
+      }
     }
 }
 </script>

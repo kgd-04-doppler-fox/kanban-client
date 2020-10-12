@@ -19,6 +19,8 @@
   "homepage": "https://github.com/efazri/kanban-client#readme",
   "dependencies": {
     "axios": "^0.20.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "parcel-bundler": "^1.12.4",
     "vue": "^2.6.12",
     "vue-google-login": "^2.0.5",
