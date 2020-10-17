@@ -1,0 +1,41 @@
+.navbar[data-v-4e4161] {
+  background-image: linear-gradient(to bottom right, #fbf7ff, #fefedf);
+}
+#loginPage[data-v-67a274] {
+  min-height: 100vh;
+}
+img[data-v-67a274] {
+  position: relative;
+  width: 40%;
+}
+.google-signin-button[data-v-67a274] {
+  color: white;
+  background-color: #47bea3;
+  height: 50px;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 10px 20px 25px 20px;
+}
+.google-signin-button[data-v-67a274]:hover {
+  -webkit-box-shadow: 0px 3px 16px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 3px 16px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 3px 16px -2px rgba(0, 0, 0, 0.75);
+}
+.container-fluid[data-v-013831] {
+  min-height: 100vh;
+}
+.card[data-v-2cfb2c] {
+  width: 15rem;
+}
+.card-board-content[data-v-f8866d] {
+  background-color: #f8f9fc;
+  max-height: 80vh;
+}
+#kanban-board[data-v-811e71] {
+  max-width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(to bottom right, #fbf7ff, #fefedf);
+}
+*[data-v-8bbaec] {
+  font-family: "Poppins", sans-serif;
+}
