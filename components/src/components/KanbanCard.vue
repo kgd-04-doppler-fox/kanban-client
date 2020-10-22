@@ -3,13 +3,16 @@
     <p>Title :{{ card.title }}</p>
     <p>Category :{{ card.category }}</p>
     <p>Description : {{ card.description }}</p>
-    <p>Due Date: {{ card.due_date }}</p>
-    <div class="flex-button">
+    <p>Due Date: {{ card.due_date.split('T')[0] }}</p>
+    <p>{{error}}</p>
+    <div class="flex-button" >
       <button
         class="flex btn-info"
         href="#"
         data-toggle="modal"
         data-target="#updateTaskModal"
+        @click="fetchData"
+        :card="card"
       >
         Update
       </button>
@@ -40,8 +43,16 @@ const baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 
 export default {
   name: "KanbanCard",
+  data() {
+    return {
+      error: ""
+    };
+  },
   props: ["card"],
   methods: {
+    fetchData() {
+      this.$emit("fetchData");
+    },
     deleteCard(id) {
       let reConfirm = confirm(`You sure want to destroy it ?`);
 
@@ -57,6 +68,7 @@ export default {
             this.$emit("fetchData");
           })
           .catch((err) => {
+            this.error = err.msg
             console.log(err);
           });
       }
@@ -77,15 +89,11 @@ export default {
           this.$emit("fetchData");
         })
         .catch((err) => {
+          this.error = err.msg
           console.log(err);
         });
-    },
-    computed: {
-      convertDate() {
-        return moment(this.card.due_date).format("YYYY-MM-DD");
-      },
-    },
-  },
+    }
+  }
 };
 </script>
 

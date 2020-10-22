@@ -94,6 +94,7 @@ const baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 
 export default {
   name: "EditTask",
+  props: ["card"],
   data() {
     return {
       newTask: {

@@ -49,12 +49,7 @@
                   />
                 </div>
                 <div class="text-center">
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                  >
-                    Submit
-                  </button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
               </form>
               <div class="text-center m-2">
@@ -62,12 +57,12 @@
               </div>
 
               <!-- GOOGLE SIGN -->
-              <div id="gSignin" class="text-center">
-                <div id="customBtn" class="g-signin2" data-onsuccess="onSignIn">
-                  <span class="icon"></span>
-                  <span class="buttonText">Google</span>
-                </div>
-              </div>
+              <GoogleLogin
+                :params="params"
+                :renderParams="renderParams"
+                :onSuccess="onSuccess"
+                :onFailure="onFailure"
+              ></GoogleLogin>
             </div>
           </div>
           <div class="modal-footer">
@@ -88,15 +83,27 @@
 
 <script>
 import axios from "axios";
+import GoogleLogin from "vue-google-login";
 const baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 
 export default {
   name: "Signin",
+  props: [],
   data() {
     return {
       user: {
         email: "",
         password: "",
+        error: ""
+      },
+      params: {
+        client_id:
+          "419148580155-l4a8am6ev1u521kdp14vjnuodvalob6m.apps.googleusercontent.com",
+      },
+      renderParams: {
+        width: 250,
+        height: 50,
+        longtitle: true,
       },
     };
   },
@@ -116,7 +123,7 @@ export default {
       })
         .then((response) => {
           localStorage.setItem(`access_token`, response.data.access_token);
-          this.autoClose()
+          this.autoClose();
           this.$emit("page", "mainPage");
           this.$emit("fetchData");
         })
@@ -124,6 +131,29 @@ export default {
           console.log(err.response);
         });
     },
+    onSuccess(googleUser) {
+      var id_token = googleUser.getAuthResponse().id_token;
+      axios({
+        url: `${baseUrl}/googleSignIn`,
+        method: "POST",
+        data: {
+          access_token: id_token,
+        },
+      })
+        .then((response) => {
+          localStorage.setItem(`access_token`, response.data.access_token);
+          console.log(response)
+          this.autoClose();
+          this.$emit("page", "mainPage");
+          this.$emit("fetchData");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  components: {
+    GoogleLogin,
   },
 };
 </script>
