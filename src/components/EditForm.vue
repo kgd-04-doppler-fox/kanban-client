@@ -93,7 +93,7 @@ export default {
     edit() {
       axios({
         method: "PUT",
-        url: `https://warm-stream-58190.herokuapp.com/tasks/${this.formerData}`,
+        url: `http://localhost:3000/tasks/${this.formerData}`,
         headers: {
           access_token: localStorage.getItem("access_token"),
         },

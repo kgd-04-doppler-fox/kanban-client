@@ -89,7 +89,7 @@ export default {
   methods: {
     login() {
       axios({
-        url: "https://warm-stream-58190.herokuapp.com/login",
+        url: "http://localhost:3000/login",
         method: "POST",
         data: {
           email: this.user.email,

@@ -131,7 +131,7 @@ export default {
     },
     fetchTasks() {
       axios({
-        url: "https://warm-stream-58190.herokuapp.com/tasks",
+        url: "http://localhost:3000/tasks",
         method: "GET",
         headers: {
           access_token: localStorage.getItem("access_token"),

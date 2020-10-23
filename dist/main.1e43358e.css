@@ -1,14 +1,14 @@
-.navbar[data-v-4e4161] {
+.navbar[data-v-8ac472] {
   background-image: linear-gradient(to bottom right, #fbf7ff, #fefedf);
 }
-#loginPage[data-v-67a274] {
+#loginPage[data-v-16f45c] {
   min-height: 100vh;
 }
-img[data-v-67a274] {
+img[data-v-16f45c] {
   position: relative;
   width: 40%;
 }
-.google-signin-button[data-v-67a274] {
+.google-signin-button[data-v-16f45c] {
   color: white;
   background-color: #47bea3;
   height: 50px;
@@ -16,26 +16,26 @@ img[data-v-67a274] {
   border-radius: 10px;
   padding: 10px 20px 25px 20px;
 }
-.google-signin-button[data-v-67a274]:hover {
+.google-signin-button[data-v-16f45c]:hover {
   -webkit-box-shadow: 0px 3px 16px -2px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 3px 16px -2px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 3px 16px -2px rgba(0, 0, 0, 0.75);
 }
-.container-fluid[data-v-013831] {
+.container-fluid[data-v-ebce6e] {
   min-height: 100vh;
 }
-.card[data-v-2cfb2c] {
+.card[data-v-233dab] {
   width: 15rem;
 }
-.card-board-content[data-v-f8866d] {
+.card-board-content[data-v-45bf1d] {
   background-color: #f8f9fc;
   max-height: 80vh;
 }
-#kanban-board[data-v-811e71] {
+#kanban-board[data-v-08e2f8] {
   max-width: 100%;
   min-height: 100vh;
   background-image: linear-gradient(to bottom right, #fbf7ff, #fefedf);
 }
-*[data-v-8bbaec] {
+*[data-v-2593b2] {
   font-family: "Poppins", sans-serif;
 }
