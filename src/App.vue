@@ -47,7 +47,7 @@ export default {
 
         fetchTask(){
             axios({
-                url: `http://localhost:3000/tasks`,
+                url: `https://warm-waters-28393.herokuapp.com/tasks`,
                 method: `get`,
                 headers: {
                     access_token : localStorage.getItem('access_token')

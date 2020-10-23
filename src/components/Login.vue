@@ -43,7 +43,7 @@ export default {
     methods: {
         login(){
             axios({
-                url: `http://localhost:3000/login`,
+                url: `https://warm-waters-28393.herokuapp.com/login`,
                 method: 'post',
                 data: {
                     email: this.email_login,
@@ -73,7 +73,7 @@ export default {
         onSuccess(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
             axios({
-                url: `http://localhost:3000/googleSignIn`,
+                url: `https://warm-waters-28393.herokuapp.com/googleSignIn`,
                 method: 'post',
                 data: {
                     access_token: id_token

@@ -33,7 +33,7 @@ export default {
     methods: {
         registration(){
             axios({
-                url: 'http://localhost:3000/register',
+                url: 'https://warm-waters-28393.herokuapp.com/register',
                 method: 'post',
                 data: {
                     name: `${this.first_name} ${this.last_name}`,

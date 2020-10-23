@@ -23,7 +23,7 @@ export default {
     methods: {
         addTask(){
             axios ({
-                url: `http://localhost:3000/tasks`,
+                url: `https://warm-waters-28393.herokuapp.com/tasks`,
                 method: 'post',
                 data: {
                     title: this.title,
