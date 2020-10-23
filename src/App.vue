@@ -30,6 +30,7 @@
     <EditPage
       v-else-if="pageName == 'edit-page'"
       :taskDataForEdit="taskDataForEdit"
+      @deleteTask="deleteTask"
       @editTask="editTask">
     </EditPage>
   </section>
@@ -43,6 +44,7 @@ import Login from './views/Login'
 import Register from './views/Register'
 import axios from './config/axios'
 import EditPage from './views/EditPage'
+
 export default {
   components : {
     name : 'App',
@@ -51,7 +53,27 @@ export default {
     Login,
     Register,
     EditPage,
-    Navbar
+    Navbar,
+  },
+  data() {
+    return {
+      pageName: 'home-page',
+      stages: [
+        {
+          stage: "Back-Log"
+        },
+        {
+          stage: "To-Do"
+        },
+        {
+          stage: "Doing"
+        },
+        {
+          stage: "Done"
+        },
+      ],
+      taskDataForEdit : {}
+    }
   },
   methods : {
     changePage(name) {
@@ -110,7 +132,8 @@ export default {
             }
         })
         .then(task => {
-            this.changePage('home-page')
+          console.log('ini deleteeeeeeeeeeeeeeeeeeeeee');
+          this.changePage('home-page')
         })
         .catch(err => {
             console.log(err, "<<<<<< failed deleting");
@@ -136,26 +159,6 @@ export default {
     //     console.log(err.response, 'error fetch');
     //   })
     // }
-  },
-  data() {
-    return {
-      pageName: 'home-page',
-      stages: [
-        {
-          stage: "Back-Log"
-        },
-        {
-          stage: "To-Do"
-        },
-        {
-          stage: "Doing"
-        },
-        {
-          stage: "Done"
-        },
-      ],
-      taskDataForEdit : {}
-    }
   },
   created() {
     if(localStorage.getItem('access_token')){

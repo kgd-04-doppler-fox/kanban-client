@@ -22,6 +22,10 @@
                             <div id="register-link" class="text-right">
                                 <a href="#" @click="register" class="text-info">Register here</a>
                             </div>
+                            <div>
+                                <p>or sign in with google</p>
+                                <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure">Login</GoogleLogin>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -32,14 +36,25 @@
 
 <script>
 import axios from '../config/axios'
+import GoogleLogin from 'vue-google-login';
+
 export default {
     components : {
-        name : 'Login'
+        name : 'Login',
+        GoogleLogin
     },
     data() {
         return {
             email : '',
             password : '',
+            params: {
+                client_id: "223469474641-suck9rvpamc0q98brh97ng0nr6li0631.apps.googleusercontent.com"
+            },
+            renderParams: {
+                width: 250,
+                height: 50,
+                longtitle: true
+            }
         }
     },
     methods : {
@@ -63,6 +78,30 @@ export default {
         },
         register() {
             this.$emit('registerPage', 'register')
+        },
+        onSuccess(googleUser) {
+            console.log(googleUser); 
+            // This only gets the user information: id, name, imageUrl and email
+            console.log(googleUser.getBasicProfile());
+            var id_token = googleUser.getAuthResponse().id_token;
+            axios({
+                url : `/googleSignIn`,
+                method : 'post',
+                data : {
+                    access_token: id_token
+                }
+            })
+            .then(({data}) => {
+                localStorage.setItem('access_token', data.access_token)
+                this.$emit('changePage', 'home-page')
+                console.log(data.access_token);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        },
+        onFailure(){
+            console.log(`error`)
         }
     }
 }

@@ -12,7 +12,7 @@
                             :fetchedTasks="fetchedTasks"
                             @updateForm="updateForm"
                             @deleteTask="deleteTask"
-                            ></TaskHead>
+                        ></TaskHead>
                             <!-- <div class="col-md-3">
                             <div class="bg-secondary rounded p-3 text-left">To-Do</div>
                         </div>
@@ -67,9 +67,8 @@ export default {
     },
     deleteTask(payload) {
         this.$emit('deleteTask', payload)
-        this.$emit('fetchTasks', this.fetchTasks)
+        this.fetchTasks()
     }
-
   },
   created() {
     this.fetchTasks()

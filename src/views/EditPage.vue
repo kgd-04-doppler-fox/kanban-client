@@ -25,6 +25,7 @@
                                 <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
                             </div>
                         </form>
+                        <button @click="deleteTask" class="fas fa-pen-square">Delete</button> 
                     </div>
                 </div>
             </div>
@@ -57,6 +58,12 @@ export default {
                 category : this.category
             }
             this.$emit('editTask', payload)
+        },
+        deleteTask() {
+            let payload = {
+                id : this.taskDataForEdit.id,
+            }
+            this.$emit('deleteTask', payload)
         }
     }
 

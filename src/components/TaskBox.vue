@@ -10,24 +10,37 @@
             <div class="col">
                 <h5>By: {{task.UserId}}</h5>
             </div>
-            <div class="card-button">
+            <div class="card-button" v-if="hideEditButton">
                 <button @click="updateForm" class="fas fa-pen-square">Edit</button> 
-                <button @click="deleteTask" class="fas fa-pen-square">Delete</button> 
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import jwt from 'jsonwebtoken'
 export default {
     name : 'TaskBox',
     props : ['fetchedTasks', 'task'],
+    data () {
+        return {
+          hideEditButton: false
+        }        
+    },
     methods : {
         updateForm() {
             this.$emit('updateForm', this.task)
-        },
-        deleteTask() {
-            this.$emit('deleteTask', this.task)
+        }
+    },
+    created () {
+        const decoded = jwt.verify(localStorage.getItem('access_token'),'rahasia')
+        console.log(decoded);
+        if (decoded){
+            if (decoded.id === this.task.UserId){
+                this.hideEditButton = true
+            } else {
+                this.hideEditButton = false
+            }
         }
     }
 }
