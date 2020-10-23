@@ -23,7 +23,7 @@
             </div>
         </form>
         <div class="row m-0">
-          <CategoryBoard v-for="(category, i) in categories" :key="i" :category="category" :tasks="tasks" @tofetchTask="fetchKanban"></CategoryBoard>
+          <CategoryBoard v-for="(category, i) in categories" :key="i" :category="category" :tasks="tasks" @tofetchTask="fetchKanban" @toFetchDelete="fetchKanban"></CategoryBoard>
         </div>
     </div>
 </template>

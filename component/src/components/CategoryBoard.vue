@@ -9,20 +9,7 @@
     <div class="card-board-content py-1 px-3 overflow-auto"
         style="background-color: #f8f9fc; max-height: 80vh;">
         <!-- single card -->
-        <div class="card my-3" v-for="task in filterTask" :key="task.id">
-        <div class="card-body">
-            <h5 class="card-title">{{task.title}}</h5>
-            <p class="card-text">
-            <small class="text-muted">{{ task.UserId }}</small> <br>
-            <small class="text-muted">{{ task.createdAt }}</small>
-            </p>
-            <div class="options">
-            <button class="btn"><i class="fas fa-pencil-alt"></i></button>
-            <button class="btn" @click="deleteTask"><i class="fas fa-trash-alt"></i></button>
-            <button class="btn"><i class="fas fa-expand-arrows-alt"></i></button>
-            </div>
-        </div>
-        </div>
+        <TaskCard v-for="task in filterTask" :key="task.id" :task="task" @tofetchTask="fetchDelete"></TaskCard>
         <!-- card ends  -->
     </div>
     <!-- backlog content ends  -->
@@ -37,12 +24,13 @@
 </template>
 
 <script>
-// import TaskCard from './TaskCard'
+import TaskCard from './TaskCard'
 import axios from 'axios'
+// import Test from './Test'
 
 export default {
     name: 'CategoryBoard',
-    // components: { TaskCard },
+    components: { TaskCard },
     props: ['category', 'tasks'],
     computed: {
         filterTask () {
@@ -50,10 +38,10 @@ export default {
         }
     },
     methods: {
-        deleteTask () {
+        deleteTask (id) {
             axios({
                 method: 'DELETE',
-                url: 'http://localhost:3000/tasks/' + this.tasks.id,
+                url: 'http://localhost:3000/tasks/' + id,
                 headers: {
                     access_token: localStorage.getItem('access_token')
                 }
@@ -64,6 +52,9 @@ export default {
             .catch(err => {
                 console.log(err)
             })
+        },
+        fetchDelete () {
+            this.$emit('toFetchDelete')
         }
     }
 }

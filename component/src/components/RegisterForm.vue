@@ -4,7 +4,7 @@
           <div class="card bg-light">
             <article class="card-body mx-auto" style="width: 50%;">
               <h4 class="card-title mt-3 text-center">Create Account</h4>
-              <form @submit.prevent="resgister" id="register">
+              <form @submit.prevent="register" id="register">
                 <div class="form-group input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
@@ -22,7 +22,7 @@
                 <div class="form-group mt-4">
                   <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
                 </div>
-                <p class="text-center">Have an account? <a @click="toLogin" href="#login" id="login-form">Log In</a> </p>
+                <p class="text-center">Have an account? <a @click="toLogin" href="#" id="login-form">Sign In</a> </p>
               </form>
             </article>
           </div>
@@ -48,9 +48,13 @@ export default {
           axios({
               method: 'POST',
               url: 'http://localhost:3000/register',
+              data: {
+                email: this.user.email,
+                password: this.user.password 
+              }
           })
           .then(respone => {
-            this.$emit('toPage', 'loginPage')
+            this.$emit('toLogin', 'loginPage')
           })
           .catch(err => {
             console.log(err.respone)

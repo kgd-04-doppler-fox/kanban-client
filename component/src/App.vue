@@ -1,8 +1,8 @@
 <template>
   <div>
       <Navbar @logoutSuccess="changePage" :page="currentPage"></Navbar>
-      <LoginForm v-if="currentPage === 'loginPage'" @toPage="changePage"></LoginForm>
-      <RegisterForm v-else-if="currentPage === 'registerPage'" @toPage="changePage"></RegisterForm>
+      <LoginForm v-if="currentPage === 'loginPage'" @toPage="changePage" @toRegister="changePage"></LoginForm>
+      <RegisterForm v-else-if="currentPage === 'registerPage'" @toLogin="changePage"></RegisterForm>
       <MainPage v-else-if="currentPage === 'mainPage'"></MainPage>
 
   </div>
