@@ -16,24 +16,18 @@
       @changePage="changePage"
       @afterLogin="fetchTask"
     ></LoginForm>
-    <AddForm
-      v-else-if="currentPage == 'addPage'"
-      @succeed="homeLoading"
-      @fetch="fetchTask"
-      @backtohome="changePage"
-    ></AddForm>
     <MainPage
       v-else-if="currentPage == 'dashboard'"
       :tasks="tasks"
       :categories="categories"
       @changePage="changePage"
+      @fetchTask="fetchTask"
     ></MainPage>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import AddForm from "./components/AddForm";
 import MainPage from "./components/MainPage";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
@@ -51,8 +45,7 @@ export default {
     Navbar,
     MainPage,
     LoginForm,
-    RegisterForm,
-    AddForm,
+    RegisterForm
   },
   methods: {
     changePage(page) {
@@ -63,14 +56,13 @@ export default {
     },
     fetchTask() {
       axios({
-        url: `http://localhost:3000/tasks`,
+        url: `https://tranquil-tundra-97414.herokuapp.com/tasks`,
         method: "GET",
         headers: {
           access_token: localStorage.getItem("access_token"),
         },
       })
         .then((response) => {
-          console.log(response);
           this.tasks = response.data;
         })
         .catch((err) => {
