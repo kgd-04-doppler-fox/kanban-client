@@ -1,9 +1,12 @@
 <template>
-  <div class="card border-black">
+  <div class="card-deck border-black">
     <p>Title :{{ card.title }}</p>
     <p>Category :{{ card.category }}</p>
     <p>Description : {{ card.description }}</p>
     <p>Due Date: {{ card.due_date.split('T')[0] }}</p>
+    <p>Uploaded By: {{card.User.email}}</p>
+    <p>Uploaded At: {{card.createdAt.split('T')[0]}}</p>
+    <p>Organization: {{card.User.organization}}</p>
     <p>{{error}}</p>
     <div class="flex-button" >
       <button
@@ -11,8 +14,7 @@
         href="#"
         data-toggle="modal"
         data-target="#updateTaskModal"
-        @click="fetchData"
-        :card="card"
+        @click="fetchOneData(card.id)"
       >
         Update
       </button>
@@ -33,6 +35,9 @@
       <button class="flex btn-danger" @click="deleteCard(card.id)">
         Delete
       </button>
+      <div class="card-footer">
+      <small class="text-muted">Last updated {{card.updatedAt.split('T')[0]}}</small>
+      </div>
     </div>
   </div>
 </template>
@@ -45,10 +50,11 @@ export default {
   name: "KanbanCard",
   data() {
     return {
-      error: ""
+      error: "",
+      task: ""
     };
   },
-  props: ["card"],
+  props: ["card", "task"],
   methods: {
     fetchData() {
       this.$emit("fetchData");
@@ -68,7 +74,6 @@ export default {
             this.$emit("fetchData");
           })
           .catch((err) => {
-            this.error = err.msg
             console.log(err);
           });
       }
@@ -89,7 +94,22 @@ export default {
           this.$emit("fetchData");
         })
         .catch((err) => {
-          this.error = err.msg
+          console.log(err);
+        });
+    },
+    fetchOneData(id) {
+      axios({
+        method: "GET",
+        url: `${baseUrl}/tasks/${id}`,
+        headers: {
+          access_token: localStorage.getItem("access_token"),
+        },
+      })
+        .then(({ data }) => {
+          this.task = data;
+          console.log(data, `<<<This is from fetchone`);
+        })
+        .catch((err) => {
           console.log(err);
         });
     }

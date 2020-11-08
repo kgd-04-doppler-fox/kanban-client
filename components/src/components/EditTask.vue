@@ -7,6 +7,7 @@
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
+  {{task}}
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -94,7 +95,7 @@ const baseUrl = "https://shrouded-falls-16636.herokuapp.com";
 
 export default {
   name: "EditTask",
-  props: ["card"],
+  props: ["task"],
   data() {
     return {
       newTask: {
