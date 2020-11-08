@@ -1,13 +1,42 @@
 <template>
   <div class="card-deck border-black">
-    <p>Title :{{ card.title }}</p>
-    <p>Category :{{ card.category }}</p>
-    <p>Description : {{ card.description }}</p>
-    <p>Due Date: {{ card.due_date.split('T')[0] }}</p>
-    <p>Uploaded By: {{card.User.email}}</p>
-    <p>Uploaded At: {{card.createdAt.split('T')[0]}}</p>
-    <p>Organization: {{card.User.organization}}</p>
-    <p>{{error}}</p>
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <table class="table">
+        <tbody>
+            <tr>
+              <th>Title</th>
+                <td>{{ card.title}}</td>
+            </tr>
+            <tr>
+              <th>Category</th>
+                <td>{{ card.category }}</td>
+            </tr>
+            <tr>
+              <th>Description</th>
+                <td>{{ card.description }}</td>
+            </tr>
+            <tr>
+              <th>Due Date</th>
+                <td>{{ card.due_date.split('T')[0] }}</td>
+            </tr>
+            <tr>
+              <th>Uploaded By</th>
+                <td>{{card.User.email}}</td>
+            </tr>
+            <tr>
+              <th>Uploaded At</th>
+                <td>{{card.createdAt.split('T')[0]}}</td>
+            </tr>
+            <tr>
+              <th>Organization</th>
+                <td>{{card.User.organization}}</td>
+            </tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
+    <td>{{error}}</td>
     <div class="flex-button" >
       <button
         class="flex btn-info"
